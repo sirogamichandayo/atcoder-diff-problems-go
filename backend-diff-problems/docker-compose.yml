@@ -12,15 +12,17 @@ services:
     tty: true
     env_file:
       - ".env"
-  sin-mysql:
-    build: ./mariadb/
+  sin-mariadb:
+    build: ./mariadb
     volumes:
       # 初期データを投入するSQLが格納されているディレクトリ
       - ./mariadb/init:/docker-entrypoint-initdb.d
       # 永続化するときにマウントするディレクトリ
       - ./mariadb/data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=secret
+      - MARIADB_ROOT_PASSWORD=secret
     ports:
-      - "23308:3308"
+      - "23308:3306"
+    expose:
+      - 3306
     container_name: diff-problems-mariadb

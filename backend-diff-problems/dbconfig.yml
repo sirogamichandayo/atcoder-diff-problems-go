@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: ${MYSQL_MGT_USER}:${MYSQL_MGT_PASSWORD}@tcp(${MYSQL_MGT_HOST}:${MYSQL_MGT_PORT})/${MYSQL_MGT_DATABASE}?charset=utf8mb4&parseTime=True&loc=Local
+  dir: mysql/migrations
+  table: migrations
