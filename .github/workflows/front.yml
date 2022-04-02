@@ -12,6 +12,6 @@ jobs:
       - name: Install packages
         run: yarn install
       - name: Prettier
-        run: yarn prettier --write './src/**/*.{tsx,ts,css}'
+        run: yarn prettier './src/**/*.{tsx,ts,css}'
       - name: Lint
         run: yarn eslint './src/**/*.{js,jsx,ts,tsx}'
