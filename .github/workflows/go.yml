@@ -36,9 +36,6 @@ jobs:
         working-directory: backend-diff-problems    
     
     steps:
-    - name: test
-      run: pwd
-      
     - name: Build
       run: go build -v ./...
 
@@ -55,9 +52,7 @@ jobs:
         working-directory: ./backend-diff-problems
         
     steps:
-      - uses: actions/checkout@v2
-      - name: test
-        run: pwd
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
