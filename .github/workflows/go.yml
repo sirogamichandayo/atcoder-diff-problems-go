@@ -31,11 +31,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Ls
-      run: ls
-      
+
     - name: Echo
-      run: echo ${GITHUB_WORKSPACE} 
+      run: ls ${GITHUB_WORKSPACE} 
       
     - name: Build
       run: go build -v ./...
