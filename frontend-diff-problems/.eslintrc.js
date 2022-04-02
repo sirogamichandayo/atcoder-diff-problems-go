@@ -5,26 +5,31 @@ module.exports = {
     node: true,
     "jest/globals": true
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   extends: [
-    'plugin:react/recommended',
-    'standard',
-    'prettier'
+    "plugin:react/recommended",
+    "standard",
+    "prettier"
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: "latest",
+    sourceType: "module"
   },
   plugins: [
-    'react',
-    '@typescript-eslint',
-    'jest'
+    "react",
+    "@typescript-eslint",
+    "jest"
   ],
   rules: {
-    'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error']
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
   }
 }
