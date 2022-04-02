@@ -31,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Ls
+      run: ls
+      
     - name: Build
       run: go build -v ./...
 
