@@ -4,6 +4,9 @@ jobs:
   test:
     name: Check the source code
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend-diff-problems
     steps:
       - uses: actions/checkout@v3
       - name: Install packages
