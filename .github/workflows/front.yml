@@ -21,5 +21,5 @@ jobs:
       - name: Lint
         run: yarn eslint './src/**/*.{ts,tsx}'
       - name: Test
-        run: react-scripts test
+        run: yarn test --watchAll
 
