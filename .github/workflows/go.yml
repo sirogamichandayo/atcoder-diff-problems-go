@@ -25,16 +25,11 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.18  
-        
-        
+                
   build:
     needs: setup
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: backend-diff-problems    
-    
+
     steps:
     - name: Build
       run: go build -v ./...
@@ -46,13 +41,8 @@ jobs:
   lint:
     needs: setup
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./backend-diff-problems
         
     steps:
-
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
