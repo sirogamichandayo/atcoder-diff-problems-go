@@ -1,0 +1,21 @@
+name: golang-ci
+on: [push]
+
+jobs:
+  setup:
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.0'
+
+      - run: go version
+
+  # buildテスト
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: build
+        run: go build ./...
