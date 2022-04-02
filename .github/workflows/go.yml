@@ -32,6 +32,11 @@ jobs:
 
     steps:
 
+    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+    - name: List files in the repository
+      run: |
+        ls ${{ github.workspace }}
+
     - name: Echo
       run: ls ${GITHUB_WORKSPACE} 
       
