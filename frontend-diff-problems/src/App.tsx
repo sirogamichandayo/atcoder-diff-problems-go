@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 function App() {
-let a = 10;
+  const a = 10;
   return (
     <div className="App">
       {a}
