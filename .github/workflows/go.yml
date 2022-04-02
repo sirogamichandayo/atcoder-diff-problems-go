@@ -7,38 +7,17 @@ on:
     branches: [ main ]
     
 jobs:
-  setup:
+
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    
-#    - name: Cache
-#      uses: actions/cache@v3.0.1
-#      with:
-#        path: ~/go/pkg/mod
-#        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-#        restore-keys: |
-#          ${{ runner.os }}-go-
-
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
-        go-version: 1.18  
-                
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
+        go-version: 1.18        
 
-    steps:
-
-    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-    - name: List files in the repository
-      run: |
-        ls ${{ github.workspace }}
-
-    - name: Echo
-      run: ls ${GITHUB_WORKSPACE} 
       
     - name: Build
       run: go build -v ./...
@@ -47,12 +26,12 @@ jobs:
       run: go test -v ./...
   
 
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
+#   lint:
+#    needs: setup
+#    runs-on: ubuntu-latest
         
-    steps:
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: v1.29
+#    steps:
+#      - name: golangci-lint
+#        uses: golangci/golangci-lint-action@v2
+#        with:
+#          version: v1.29
