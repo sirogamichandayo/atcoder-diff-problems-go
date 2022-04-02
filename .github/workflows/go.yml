@@ -13,13 +13,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-#    - name: Cache
-#      uses: actions/cache@v3.0.1
-#      with:
-#        path: ~/go/pkg/mod
-#        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-#        restore-keys: |
-#          ${{ runner.os }}-go-
+    - name: Cache
+      uses: actions/cache@v3.0.1
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
 
     - name: Set up Go
       uses: actions/setup-go@v3
@@ -30,6 +30,10 @@ jobs:
   build:
     needs: setup
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./backend-diff-problems    
     
     steps:
     - name: test
@@ -44,8 +48,15 @@ jobs:
   lint:
     needs: setup
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./backend-diff-problems
+        
     steps:
       - uses: actions/checkout@v2
+      - name: test
+        run: pwd
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
