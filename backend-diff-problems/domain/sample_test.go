@@ -7,8 +7,8 @@ import (
 
 func TestAdd(t *testing.T) {
 	a := 1
-	b := 2
-	expected := 3
+	b := 4
+	expected := 5
 
 	actual := add(a, b)
 	assert.Equal(t, expected, actual)
