@@ -20,3 +20,7 @@ jobs:
         run: yarn prettier --check '**/*.{ts,tsx}'
       - name: Lint
         run: yarn eslint './src/**/*.{ts,tsx}'
+      - name: Test
+        run: yarn test --watchAll=false --passWithNoTests
+
+
