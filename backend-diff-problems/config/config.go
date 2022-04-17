@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
+	"path"
 )
 
 type Config struct {
@@ -16,9 +17,9 @@ type SinDb struct {
 	Database string `toml:"database"`
 }
 
-func LoadConfig() (*Config, error) {
+func LoadConfig(configDir string) (*Config, error) {
 	var config Config
-	_, err := toml.DecodeFile("/go/src/app/config/config.toml", &config)
+	_, err := toml.DecodeFile(path.Join(configDir, "config.toml"), &config)
 	if err != nil {
 		return nil, err
 	}

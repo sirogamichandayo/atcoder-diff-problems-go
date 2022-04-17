@@ -9,7 +9,7 @@ var config *Config
 
 func TestConfigMain(t *testing.T) {
 	var err error
-	config, err = LoadConfig()
+	config, err = LoadConfig("./")
 	assert.Nil(t, err)
 
 	t.Run("SinDbの値の存在チェック", SinDbの値の存在チェック)
