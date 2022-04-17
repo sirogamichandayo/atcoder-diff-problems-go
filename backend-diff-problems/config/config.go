@@ -17,9 +17,9 @@ type SinDb struct {
 	Database string `toml:"database"`
 }
 
-func LoadConfig(configDir string) (*Config, error) {
+func LoadConfig(execDir string) (*Config, error) {
 	var config Config
-	_, err := toml.DecodeFile(path.Join(configDir, "config.toml"), &config)
+	_, err := toml.DecodeFile(path.Join(execDir, "config/config.toml"), &config)
 	if err != nil {
 		return nil, err
 	}

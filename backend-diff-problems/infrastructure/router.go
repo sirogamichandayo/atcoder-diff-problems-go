@@ -5,7 +5,6 @@ import (
 	"diff-problems/interfaces/controllers"
 	"github.com/gin-gonic/gin"
 	"os"
-	"path"
 )
 
 var Router *gin.Engine
@@ -15,7 +14,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	config, err := conf.LoadConfig(path.Join(currentDir, "config"))
+	config, err := conf.LoadConfig(currentDir)
 	if err != nil {
 		panic(err)
 	}
