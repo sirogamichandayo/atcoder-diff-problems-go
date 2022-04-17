@@ -21,12 +21,11 @@ func init() {
 	}
 
 	router := gin.Default()
-	makeApiV1(router, config)
+	setApiV1Router(router.Group("api/v1"), config)
 	Router = router
 }
 
-func makeApiV1(router *gin.Engine, config *conf.Config) {
-	v1 := router.Group("api/v1")
+func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	userController := controllers.NewUserController(NewSqlHandler(config.SinDb))
 	v1.Use(cors.New(cors.Config{
 		AllowOrigins: config.ApiV1.AllowOrigins,
