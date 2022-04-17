@@ -7,6 +7,7 @@ import (
 
 type Config struct {
 	SinDb SinDb
+	ApiV1 ApiV1
 }
 
 type SinDb struct {
@@ -15,6 +16,10 @@ type SinDb struct {
 	User     string `toml:"user"`
 	Password string `toml:"password"`
 	Database string `toml:"database"`
+}
+
+type ApiV1 struct {
+	AllowOrigins []string `toml:"allow-origins"`
 }
 
 func LoadConfig(execDir string) (*Config, error) {
