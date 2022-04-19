@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <h1>Hello</h1>
       {isLoading ? (
-        "loading...2"
+        "loading...3"
       ) : (
         <ul>
           {data?.map((d: User) => {
