@@ -21,5 +21,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# ミスでnpm installするのを防ぐ
+package-lock.json
+
 # Jetbrains Editor
 .idea
