@@ -3,6 +3,8 @@ name: Front
 on:
   workflow_dispatch:
   push:
+    paths:
+      - backend-diff-problems/**
     branches-ignore:
       - main
     
