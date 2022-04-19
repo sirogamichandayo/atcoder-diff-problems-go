@@ -11,11 +11,11 @@ import (
 var Router *gin.Engine
 
 func init() {
-	currentDir, err := os.Getwd()
+	cDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
-	config, err := conf.LoadConfig(currentDir)
+	config, err := conf.LoadConfig(cDir)
 	if err != nil {
 		panic(err)
 	}
