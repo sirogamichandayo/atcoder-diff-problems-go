@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - backend-diff-problems/**
+      - frontend-diff-problems/**
     branches-ignore:
       - main
     
