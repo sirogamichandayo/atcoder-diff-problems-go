@@ -1,8 +1,10 @@
 name: Build React on S3
 on:
   push:
+      paths:
+        - front-diff-problems/**
       branches:
-        - master
+        - main
 jobs:
   build:
     runs-on: ubuntu-latest
