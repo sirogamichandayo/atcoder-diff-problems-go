@@ -24,7 +24,7 @@ export class StorageStack extends Stack {
       this,
       "OriginAccessIdentify",
       {
-        comment: "website-distribution-originAccessIdentity2"
+        comment: "website-distribution-originAccessIdentity"
       }
     );
 
