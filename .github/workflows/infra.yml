@@ -3,8 +3,6 @@ name: Infra
 on:
   workflow_dispatch:
   push:
-    paths:
-      - infra-diff-problems/**
     branches-ignore:
       - main
     
