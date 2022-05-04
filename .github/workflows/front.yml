@@ -25,5 +25,3 @@ jobs:
         run: yarn eslint './src/**/*.{ts,tsx}'
       - name: Test
         run: yarn test --watchAll=false --passWithNoTests
-
-
