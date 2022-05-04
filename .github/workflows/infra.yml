@@ -1,4 +1,4 @@
-name: Front
+name: Infra
 
 on:
   workflow_dispatch:
