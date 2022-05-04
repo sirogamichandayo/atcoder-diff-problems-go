@@ -6,5 +6,3 @@ RUN apt-get update && apt-get install -y unzip
 RUN mkdir /go/src/app
 WORKDIR /go/src/app
 COPY ./ /go/src/app
-
-WORKDIR /go/src/app/

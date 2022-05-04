@@ -29,3 +29,6 @@ mariadb/data
 
 # environment variables
 .env
+
+# realized
+.realize.yml
