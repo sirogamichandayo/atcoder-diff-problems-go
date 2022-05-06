@@ -1,7 +1,24 @@
 package commands
 
-import "fmt"
+import "diff-problems/interfaces/database"
 
-func FetchAndStoreProblemDifficulties() {
-	fmt.Println("called")
+type FetchAndStoreProblemDifficultyCommand struct {
+	Interactor usecase.FetchAndStoreProblemDifficultyInteractor
+}
+
+func NewFetchAndStoreProblemDifficultyCommand(sqlHandler database.SqlHandler) *FetchAndStoreProblemDifficultyCommand {
+	return FetchAndStoreProblemDifficultyCommand{
+		Interactor: usecase.FetchAndStoreProblemDifficultyInteractor{
+			ProblemDifficultyRepository: &database.ProblemDifficultyRepository{
+				SqlHandler: sqlHandler,
+			},
+		},
+	}
+}
+
+func (command *FetchAndStoreProblemDifficultyCommand) Exec() {
+	err := command.Interactor.Exec()
+	if err != nil {
+
+	}
 }

@@ -1,7 +1,8 @@
 package infrastructure
 
 import (
-	"diff-problems/interfaces/commands"
+	conf "diff-problems/config"
+	"fmt"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -11,9 +12,21 @@ var rootCmd = &cobra.Command{
 }
 
 var fetchAndStoreProblemDifficultiesCmd = &cobra.Command{
-	Use: "fetch-and-store-problem-difficulties",
+	Use:   "fetch-and-store-problem-difficulties",
+	Short: "atcoder problems apiを叩いて問題のdiffを永続化する",
 	Run: func(cmd *cobra.Command, args []string) {
-		commands.FetchAndStoreProblemDifficulties()
+		cDir, err := os.Getwd()
+		if err != nil {
+			panic(err)
+		}
+		config, err := conf.LoadConfig(cDir)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println(config)
+		// command := commands.NewFetchAndStoreProblemDifficulties(NewSqlHandler(config.SinDb))
+		// command.Exec()
 	},
 }
 
