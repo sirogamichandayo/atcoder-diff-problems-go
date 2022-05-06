@@ -12,18 +12,19 @@ services:
       - "8080:8080"
     command: /bin/bash -c "go run main.go"
     depends_on:
-      - sin-mariadb
-  sin-mariadb:
-    build: ./mariadb
+      - sin-mysql
+  sin-mysql:
+    build: ./mysql
+    platform: linux/amd64
     volumes:
       # 初期データを投入するSQLが格納されているディレクトリ
-      - ./mariadb/init:/docker-entrypoint-initdb.d
+      - ./mysql/init:/docker-entrypoint-initdb.d
       # 永続化するときにマウントするディレクトリ
-      - ./mariadb/data:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
     environment:
-      - MARIADB_ROOT_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
     ports:
       - "23308:3306"
     expose:
       - 3306
-    container_name: diff-problems-mariadb
+    container_name: diff-problems-mysql

@@ -24,8 +24,8 @@ go.work
 # Goland
 .idea
 
-# mariadb
-mariadb/data
+# mysql
+mysql/data
 
 # environment variables
 .env

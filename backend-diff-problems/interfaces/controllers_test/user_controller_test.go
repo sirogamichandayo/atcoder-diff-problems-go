@@ -13,7 +13,7 @@ import (
 
 func Test_Index正常系(t *testing.T) {
 	sinDb := config.SinDb{
-		Host:     "sin-mariadb",
+		Host:     "sin-mysql",
 		Port:     "3306",
 		User:     "root",
 		Password: "secret",
