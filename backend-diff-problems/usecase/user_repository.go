@@ -1,9 +1,9 @@
 package usecase
 
-import "diff-problems/domain"
+import "diff-problems/domain/entity"
 
 type UserRepository interface {
-	Store(domain.User) (uint64, error)
-	FindById(uint64) (domain.User, error)
-	FindAll() (domain.Users, error)
+	Store(entity.User) (uint64, error)
+	FindById(uint64) (entity.User, error)
+	FindAll() (entity.Users, error)
 }

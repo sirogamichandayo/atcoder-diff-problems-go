@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"diff-problems/domain"
+	"diff-problems/domain/entity"
 	"diff-problems/interfaces/database"
 	"diff-problems/usecase"
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func NewUserController(sqlHandler database.SqlHandler) *UserController {
 }
 
 func (controller *UserController) Create(c Context) {
-	u := domain.User{}
+	u := entity.User{}
 	if err := c.Bind(&u); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
 		return

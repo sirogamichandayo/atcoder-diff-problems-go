@@ -1,7 +1,7 @@
 package database
 
 import (
-	"diff-problems/domain"
+	"diff-problems/domain/entity"
 	"fmt"
 	"github.com/google/uuid"
 )
@@ -10,10 +10,9 @@ type UserRepository struct {
 	SqlHandler
 }
 
-func (repo *UserRepository) Store(u domain.User) (id uint64, err error) {
+func (repo *UserRepository) Store(u entity.User) (id uint64, err error) {
 	uuidObj, _ := uuid.NewUUID()
 	id = uint64(uuidObj.ID())
-	fmt.Println(id)
 	if _, err = repo.Execute(
 		"insert into users (id, first_name, last_name) values (?, ?, ?)", id, u.FirstName, u.LastName,
 	); err != nil {
@@ -22,7 +21,7 @@ func (repo *UserRepository) Store(u domain.User) (id uint64, err error) {
 	return
 }
 
-func (repo *UserRepository) FindById(identifier uint64) (user domain.User, err error) {
+func (repo *UserRepository) FindById(identifier uint64) (user entity.User, err error) {
 	row, err := repo.Query("SELECT id, first_name, last_name FROM users WHERE id = ?", identifier)
 	defer row.Close()
 	if err != nil {
@@ -38,14 +37,14 @@ func (repo *UserRepository) FindById(identifier uint64) (user domain.User, err e
 	return
 }
 
-func (repo *UserRepository) FindAll() (users domain.Users, err error) {
+func (repo *UserRepository) FindAll() (users entity.Users, err error) {
 	rows, err := repo.Query("SELECT id, first_name, last_name FROM users")
 	defer rows.Close()
 	if err != nil {
 		return
 	}
 	for rows.Next() {
-		var user domain.User
+		var user entity.User
 		if err := rows.Scan(&user.Id, &user.FirstName, &user.LastName); err != nil {
 			continue
 		}

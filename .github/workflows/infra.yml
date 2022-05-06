@@ -15,6 +15,8 @@ jobs:
         working-directory: infra-diff-problems
     steps:
       - uses: actions/checkout@v3
+      - name: Create build directory
+        run: mkdir ../frontend-diff-problems/build
       - name: Install packages
         run: npm install
       - name: Test

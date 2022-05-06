@@ -10,7 +10,7 @@ import (
 
 var Router *gin.Engine
 
-func init() {
+func Initialize() {
 	cDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -32,6 +32,7 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 		AllowMethods: []string{"POST", "GET"},
 		AllowHeaders: []string{"Content-Type"},
 	}))
+
 	v1.POST("/users", func(c *gin.Context) { userController.Create(c) })
 	v1.GET("/users", func(c *gin.Context) { userController.Index(c) })
 	v1.GET("/users/:id", func(c *gin.Context) { userController.Show(c) })

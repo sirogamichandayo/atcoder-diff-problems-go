@@ -14,7 +14,6 @@ type SqlHandler struct {
 
 func NewSqlHandler(db config.SinDb) database.SqlHandler {
 	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", db.User, db.Password, db.Host, db.Port, db.Database)
-	fmt.Println(dns)
 	conn, err := sql.Open("mysql", dns)
 	if err != nil {
 		panic(err.Error())
