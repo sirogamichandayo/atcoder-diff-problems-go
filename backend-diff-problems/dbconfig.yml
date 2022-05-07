@@ -1,0 +1,11 @@
+development:
+  dialect: mysql
+  datasource: ${SIN_DB_USER}:${SIN_DB_PASSWORD}@tcp(${SIN_DB_HOST}:${SIN_DB_PORT})/${SIN_DB_DATABASE}?charset=utf8mb4&parseTime=True&loc=Local
+  dir: mysql/migrations
+  table: migrations
+
+test:
+  dialect: mysql
+  datasource: ${SIN_TEST_DB_USER}:${SIN_TEST_DB_PASSWORD}@tcp(${SIN_TEST_DB_HOST}:${SIN_TEST_DB_PORT})/${SIN_TEST_DB_DATABASE}?charset=utf8mb4&parseTime=True&loc=Local
+  dir: mysql/migrations
+  table: migrations

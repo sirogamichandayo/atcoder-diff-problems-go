@@ -21,7 +21,7 @@ func Test_makeFromJsonBytes(t *testing.T) {
 	assert.Nil(t, entity2.Difficulty)
 }
 
-func Test_makeMySqlValues(t *testing.T) {
+func Test_makeValueForUpsertMySql(t *testing.T) {
 	problemId1 := "problem_id1"
 	problemId2 := "problem_id2"
 	difficulty1 := -1000.12345
@@ -31,7 +31,10 @@ func Test_makeMySqlValues(t *testing.T) {
 		ProblemDifficulty{problemId2, nil},
 	}
 
-	expected := "(problem_id1,-1000.12345),(problem_id2,NULL)"
-
-	assert.Equal(t, expected, list.MakeMySqlValues())
+	placeholders, values := list.MakeValueForUpsertMySql()
+	assert.Equal(t, "(?,?),(?,?)", placeholders)
+	assert.Equal(t, problemId1, values[0])
+	assert.Equal(t, difficulty1, *(values[1].(*float64)))
+	assert.Equal(t, problemId2, values[2])
+	assert.Nil(t, values[3])
 }

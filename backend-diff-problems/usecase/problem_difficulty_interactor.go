@@ -7,7 +7,7 @@ type ProblemDifficultyInteractor struct {
 	ProblemDifficultyAtcoderProblemClient ProblemDifficultyAtcoderProblemClient
 }
 
-func (interactor *ProblemDifficultyInteractor) FetchAndStore() (err error) {
+func (interactor *ProblemDifficultyInteractor) Update() (err error) {
 	problemDifficultyList, err := interactor.ProblemDifficultyAtcoderProblemClient.Fetch()
 	if err != nil {
 		return

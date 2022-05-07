@@ -2,8 +2,6 @@ package entity
 
 import (
 	"encoding/json"
-	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -14,16 +12,19 @@ type ProblemDifficulty struct {
 
 type ProblemDifficultyList []ProblemDifficulty
 
-func (list *ProblemDifficultyList) MakeMySqlValues() string {
-	res := make([]string, 0)
-	for _, difficulty := range *list {
-		diffStr := "NULL"
-		if difficulty.Difficulty != nil {
-			diffStr = strconv.FormatFloat(*difficulty.Difficulty, 'f', -1, 64)
-		}
-		res = append(res, fmt.Sprintf("(%s,%s)", difficulty.ProblemId, diffStr))
+func (list *ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
+	listSize := len(*list)
+	placeholders := make([]string, 0, listSize)
+	for i := 0; i < listSize; i++ {
+		placeholders = append(placeholders, "(?,?)")
 	}
-	return strings.Join(res, ",")
+
+	values := make([]interface{}, 0, listSize*2)
+	for _, problem := range *list {
+		values = append(values, problem.ProblemId, problem.Difficulty)
+	}
+
+	return strings.Join(placeholders, ","), values
 }
 
 func MakeProblemDifficultyListFromJsonBytes(bytes []byte) (list ProblemDifficultyList, err error) {
@@ -38,7 +39,6 @@ func MakeProblemDifficultyListFromJsonBytes(bytes []byte) (list ProblemDifficult
 
 		var difficulty *float64
 		if !hasKey {
-			fmt.Println("hoge")
 			difficulty = nil
 		} else {
 			tmp := rawDifficulty.(float64)

@@ -8,13 +8,14 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use: "hoge",
+	Use: "AtCoderDiffProblemsCli",
 }
 
-var fetchAndStoreProblemDifficultiesCmd = &cobra.Command{
-	Use:   "fetch-and-store-problem-difficulties",
-	Short: "atcoder problems apiを叩いて問題のdiffを永続化する",
-	Run: func(cmd *cobra.Command, args []string) {
+var updateProblemDifficultiesCmd = &cobra.Command{
+	Use:   "update-problem-difficulties",
+	Short: "atcoderの問題のdiffを更新",
+	Long:  "atcoder problemsのapiを叩いて、得られた情報ををDBに保存します",
+	RunE: func(cmd *cobra.Command, args []string) error {
 		cDir, err := os.Getwd()
 		if err != nil {
 			panic(err)
@@ -24,16 +25,16 @@ var fetchAndStoreProblemDifficultiesCmd = &cobra.Command{
 			panic(err)
 		}
 
-		command := commands.NewFetchAndStoreProblemDifficultyCommand(
+		command := commands.NewUpdateProblemDifficultyCommand(
 			NewSqlHandler(config.SinDb),
 			NewRequestHandler(),
 		)
-		command.Exec()
+		return command.Exec()
 	},
 }
 
 func Execute() {
-	rootCmd.AddCommand(fetchAndStoreProblemDifficultiesCmd)
+	rootCmd.AddCommand(updateProblemDifficultiesCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

@@ -7,12 +7,12 @@ import (
 	"diff-problems/usecase"
 )
 
-type FetchAndStoreProblemDifficultyCommand struct {
+type UpdateProblemDifficultyCommand struct {
 	Interactor usecase.ProblemDifficultyInteractor
 }
 
-func NewFetchAndStoreProblemDifficultyCommand(sqlHandler database.SqlHandler, requestHandler api.RequestHandler) *FetchAndStoreProblemDifficultyCommand {
-	return &FetchAndStoreProblemDifficultyCommand{
+func NewUpdateProblemDifficultyCommand(sqlHandler database.SqlHandler, requestHandler api.RequestHandler) *UpdateProblemDifficultyCommand {
+	return &UpdateProblemDifficultyCommand{
 		Interactor: usecase.ProblemDifficultyInteractor{
 			ProblemDifficultyRepository: &database.ProblemDifficultyRepository{
 				SqlHandler: sqlHandler,
@@ -24,9 +24,6 @@ func NewFetchAndStoreProblemDifficultyCommand(sqlHandler database.SqlHandler, re
 	}
 }
 
-func (command *FetchAndStoreProblemDifficultyCommand) Exec() {
-	err := command.Interactor.FetchAndStore()
-	if err != nil {
-
-	}
+func (command *UpdateProblemDifficultyCommand) Exec() error {
+	return command.Interactor.Update()
 }
