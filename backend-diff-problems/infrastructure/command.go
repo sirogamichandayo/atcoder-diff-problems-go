@@ -2,7 +2,7 @@ package infrastructure
 
 import (
 	conf "diff-problems/config"
-	"fmt"
+	"diff-problems/interfaces/commands"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -24,9 +24,11 @@ var fetchAndStoreProblemDifficultiesCmd = &cobra.Command{
 			panic(err)
 		}
 
-		fmt.Println(config)
-		// command := commands.NewFetchAndStoreProblemDifficulties(NewSqlHandler(config.SinDb))
-		// command.Exec()
+		command := commands.NewFetchAndStoreProblemDifficultyCommand(
+			NewSqlHandler(config.SinDb),
+			NewRequestHandler(),
+		)
+		command.Exec()
 	},
 }
 
