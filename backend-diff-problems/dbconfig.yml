@@ -9,3 +9,8 @@ test:
   datasource: ${SIN_TEST_DB_USER}:${SIN_TEST_DB_PASSWORD}@tcp(${SIN_TEST_DB_HOST}:${SIN_TEST_DB_PORT})/${SIN_TEST_DB_DATABASE}?charset=utf8mb4&parseTime=True&loc=Local
   dir: mysql/migrations
   table: migrations
+
+//                        使用頻度, テストの際にmockしたいか、今後非推奨になる可能性があるか(インフラ系のパッケージ)
+// database(database/sql) 高い   ,   したい, 
+// command(cobra)         低い   ,  いらない,
+// api(gin)               一部高い,   一部必要
