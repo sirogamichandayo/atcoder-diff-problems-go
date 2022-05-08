@@ -5,17 +5,12 @@ import (
 	"diff-problems/interfaces/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"os"
 )
 
 var Router *gin.Engine
 
 func Initialize() {
-	cDir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	config, err := conf.LoadConfig(cDir)
+	config, err := conf.LoadConfig()
 	if err != nil {
 		panic(err)
 	}

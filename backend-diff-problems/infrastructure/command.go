@@ -16,11 +16,7 @@ var updateProblemDifficultiesCmd = &cobra.Command{
 	Short: "atcoderの問題のdiffを更新",
 	Long:  "atcoder problemsのapiを叩いて、得られた情報ををDBに保存します",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		cDir, err := os.Getwd()
-		if err != nil {
-			panic(err)
-		}
-		config, err := conf.LoadConfig(cDir)
+		config, err := conf.LoadConfig()
 		if err != nil {
 			panic(err)
 		}

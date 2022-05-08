@@ -22,7 +22,7 @@ type ApiV1 struct {
 	AllowOrigin string
 }
 
-func LoadConfig(execDir string) (*Config, error) {
+func LoadConfig() (*Config, error) {
 	envStrList := make(map[string]string)
 	for _, e := range os.Environ() {
 		pair := strings.Split(e, "=")
