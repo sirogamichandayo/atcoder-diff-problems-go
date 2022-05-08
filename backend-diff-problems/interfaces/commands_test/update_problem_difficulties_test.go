@@ -3,6 +3,7 @@ package commands_test
 import (
 	"diff-problems/interfaces/commands"
 	mock_api "diff-problems/interfaces/commands_test/mock"
+	"diff-problems/interfaces/database"
 	"diff-problems/test_tool"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -26,7 +27,6 @@ func Test_正常系(t *testing.T) {
 			gomock.Eq(map[string]string(nil)),
 		).
 		Return(responseMock, nil)
-
 	responseMock.
 		EXPECT().BodyBytes().
 		Return([]byte(`{"abc138_a": {"difficulty": -848}, "abc138_b": {}}`), nil)
@@ -35,27 +35,18 @@ func Test_正常系(t *testing.T) {
 	err = command.Exec()
 	assert.Nil(t, err)
 
-	rows, err := sqlHandler.Query("SELECT * FROM product_difficulties")
-	assert.Nil(t, err)
-
-	expected := map[string]func(*float64) bool{
-		"abc138_a": func(val *float64) bool {
-			return *val == float64(-848)
-		},
-		"abc138_b": func(val *float64) bool {
-			return val == nil
-		},
-	}
-
 	var problemId string
 	var difficulty *float64
+	var rows database.Row
 
-	for rows.Next() {
-		err := rows.Scan(&problemId, &difficulty)
-		assert.Nil(t, err)
+	rows, err = sqlHandler.Query(`SELECT * FROM product_difficulties where "problem_id" = "abc138_a";`)
+	defer rows.Close()
+	assert.Nil(t, err)
+	rows.Next()
+	assert.Nil(t, rows.Scan(&problemId, &difficulty))
+	assert.Equal(t, "abc138_a", problemId)
+	assert.Equal(t, -848, difficulty)
 
-		fn, ok := expected[problemId]
-		assert.True(t, ok)
-		assert.True(t, fn(difficulty))
-	}
+	// TODO: テスト修正
+
 }

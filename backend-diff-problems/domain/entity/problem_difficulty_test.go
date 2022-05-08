@@ -1,20 +1,19 @@
 package entity
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func Test_makeFromJsonBytes(t *testing.T) {
 	json := `{"abc138_a":{"difficulty": -848}, "abc138_b": {}}`
+
 	list, err := MakeProblemDifficultyListFromJsonBytes([]byte(json))
 	assert.Nil(t, err)
 
 	assert.Len(t, list, 2)
 	entity1 := list[0]
 	entity2 := list[1]
-	fmt.Println(entity2)
 	assert.Equal(t, "abc138_a", entity1.ProblemId)
 	assert.Equal(t, float64(-848), *entity1.Difficulty)
 	assert.Equal(t, "abc138_b", entity2.ProblemId)
