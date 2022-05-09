@@ -26,27 +26,53 @@ func Test_正常系(t *testing.T) {
 			gomock.Eq("https://kenkoooo.com/atcoder/resources/problem-models.json"),
 			gomock.Eq(map[string]string(nil)),
 		).
-		Return(responseMock, nil)
+		Return(responseMock, nil).
+		Times(2)
+
 	responseMock.
 		EXPECT().BodyBytes().
-		Return([]byte(`{"abc138_a": {"difficulty": -848}, "abc138_b": {}}`), nil)
+		Return([]byte(`{"abc138_a": {"difficulty": -849}, "abc138_b": {}}`), nil).
+		Times(1)
 
 	command := commands.NewUpdateProblemDifficultyCommand(sqlHandler, requestHandlerMock)
 	err = command.Exec()
 	assert.Nil(t, err)
 
-	var problemId string
 	var difficulty *float64
-	var rows database.Row
 
-	rows, err = sqlHandler.Query(`SELECT * FROM product_difficulties where "problem_id" = "abc138_a";`)
-	defer rows.Close()
-	assert.Nil(t, err)
-	rows.Next()
-	assert.Nil(t, rows.Scan(&problemId, &difficulty))
-	assert.Equal(t, "abc138_a", problemId)
-	assert.Equal(t, -848, difficulty)
+	row1, err := sqlHandler.Query(
+		`
+SELECT 
+    difficulty 
+FROM 
+    product_difficulties
+WHERE
+    problem_id = "abc138_a"`)
 
-	// TODO: テスト修正
+	defer func(row1 database.Row) {
+		err := row1.Close()
+		assert.Nil(t, err)
+	}(row1)
 
+	assert.True(t, row1.Next())
+	assert.Nil(t, row1.Scan(&difficulty))
+	assert.Equal(t, float64(-849), *difficulty)
+
+	row2, err := sqlHandler.Query(
+		`
+SELECT
+    difficulty
+FROM
+    product_difficulties
+WHERE
+    problem_id = "abc138_b"`)
+
+	defer func(row2 database.Row) {
+		err := row2.Close()
+		assert.Nil(t, err)
+	}(row2)
+
+	assert.True(t, row2.Next())
+	assert.Nil(t, row2.Scan(&difficulty))
+	assert.Nil(t, difficulty)
 }

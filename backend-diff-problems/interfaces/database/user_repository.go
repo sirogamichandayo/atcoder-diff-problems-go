@@ -23,7 +23,13 @@ func (repo *UserRepository) Store(u entity.User) (id uint64, err error) {
 
 func (repo *UserRepository) FindById(identifier uint64) (user entity.User, err error) {
 	row, err := repo.Query("SELECT id, first_name, last_name FROM users WHERE id = ?", identifier)
-	defer row.Close()
+	defer func(row Row) {
+		err := row.Close()
+		if err != nil {
+			return
+		}
+	}(row)
+
 	if err != nil {
 		return
 	}
@@ -39,7 +45,13 @@ func (repo *UserRepository) FindById(identifier uint64) (user entity.User, err e
 
 func (repo *UserRepository) FindAll() (users entity.Users, err error) {
 	rows, err := repo.Query("SELECT id, first_name, last_name FROM users")
-	defer rows.Close()
+	defer func(rows Row) {
+		err := rows.Close()
+		if err != nil {
+			return
+		}
+	}(rows)
+
 	if err != nil {
 		return
 	}

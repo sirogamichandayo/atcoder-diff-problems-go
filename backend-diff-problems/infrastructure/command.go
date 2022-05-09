@@ -15,17 +15,18 @@ var updateProblemDifficultiesCmd = &cobra.Command{
 	Use:   "update-problem-difficulties",
 	Short: "atcoderの問題のdiffを更新",
 	Long:  "atcoder problemsのapiを叩いて、得られた情報ををDBに保存します",
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
 		config, err := conf.LoadConfig()
 		if err != nil {
-			panic(err)
+			return
 		}
 
 		command := commands.NewUpdateProblemDifficultyCommand(
 			NewSqlHandler(config.SinDb),
 			NewRequestHandler(),
 		)
-		return command.Exec()
+		err = command.Exec()
+		return
 	},
 }
 

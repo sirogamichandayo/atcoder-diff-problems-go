@@ -46,7 +46,9 @@ func (res Response) BodyBytes() ([]byte, error) {
 	}
 
 	output := bytes.Buffer{}
-	output.ReadFrom(reader)
+	if _, err := output.ReadFrom(reader); err != nil {
+		return nil, err
+	}
 
 	return output.Bytes(), nil
 }
