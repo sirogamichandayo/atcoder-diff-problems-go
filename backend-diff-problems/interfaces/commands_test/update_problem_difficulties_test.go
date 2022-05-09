@@ -27,7 +27,7 @@ func Test_正常系(t *testing.T) {
 			gomock.Eq(map[string]string(nil)),
 		).
 		Return(responseMock, nil).
-		Times(2)
+		Times(1)
 
 	responseMock.
 		EXPECT().BodyBytes().
