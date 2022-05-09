@@ -30,8 +30,19 @@ var updateProblemDifficultiesCmd = &cobra.Command{
 	},
 }
 
+var startApiCmd = &cobra.Command{
+	Use:   "api",
+	Short: "apiを起動",
+	Long:  "atcoder diff problemsのapiを起動します",
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
+		RouterInitialize()
+		return Router.Run()
+	},
+}
+
 func Execute() {
 	rootCmd.AddCommand(updateProblemDifficultiesCmd)
+	rootCmd.AddCommand(startApiCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

@@ -10,7 +10,6 @@ services:
       - .:/go/src/app
     ports:
       - "8080:8080"
-    command: /bin/bash -c "go run api.go"
     depends_on:
       - sin-mysql
     env_file:
