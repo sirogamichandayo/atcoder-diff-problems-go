@@ -23,7 +23,14 @@ jobs:
     defaults:
       run:
         working-directory: backend-diff-problems
-        
+
+    env:
+      SIN_TEST_DB_USER: root
+      SIN_TEST_DB_PASSWORD: secret
+      SIN_TEST_DB_HOST: 127.0.0.1
+      SIN_TEST_DB_PORT: 3306
+      SIN_TEST_DB_DATABASE: sin_test
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Go
@@ -39,7 +46,7 @@ jobs:
       run: |
         go get github.com/rubenv/sql-migrate/sql-migrate
         go install -v github.com/rubenv/sql-migrate/sql-migrate
-        sql-migrate up
+        sql-migrate up --env=test
 
     - name: Build
       run: go build -v ./...
