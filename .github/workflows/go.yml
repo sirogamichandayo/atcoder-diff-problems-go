@@ -35,12 +35,9 @@ jobs:
       run: |
         mysql --defaults-extra-file=../.github/mysql-dbaccess.cnf -h 127.0.0.1 --user=root --password=secret --port 3306 -e 'CREATE DATABASE IF NOT EXISTS sin_test CHARACTER SET utf8mb4;'
 
-    - name: Install package
-      run: |
-        go mod tidy
-    
     - name: Create tables
       run: |
+        go install -v github.com/rubenv/sql-migrate/sql-migrate
         sql-migrate up
 
     - name: Build
