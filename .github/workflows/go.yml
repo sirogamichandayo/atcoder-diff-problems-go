@@ -32,7 +32,9 @@ jobs:
         go-version: 1.18
 
     - name: Create e tables
-      run:  mysql --defaults-extra-file=.github/mysql-dbaccess.cnf -h 127.0.0.1 --ssl-mode=DISABLED --port 3306 ivy_test < database/initialDB.sql
+      run: |
+        mysql --defaults-extra-file=.github/mysql-dbaccess.cnf -h 127.0.0.1 --ssl-mode=DISABLED --port 3306
+        sql-migrate up
 
     - name: Build
       run: go build -v ./...
