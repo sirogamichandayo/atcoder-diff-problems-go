@@ -33,7 +33,7 @@ jobs:
 
     - name: Create e tables
       run: |
-        mysql --defaults-extra-file=.github/mysql-dbaccess.cnf -h 127.0.0.1 --ssl-mode=DISABLED --port 3306
+        mysql --defaults-extra-file=../.github/mysql-dbaccess.cnf -h 127.0.0.1 --ssl-mode=DISABLED --port 3306
         sql-migrate up
 
     - name: Build
