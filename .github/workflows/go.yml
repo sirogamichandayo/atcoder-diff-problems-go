@@ -37,6 +37,7 @@ jobs:
 
     - name: Create tables
       run: |
+        go mod tidy
         go install -v github.com/rubenv/sql-migrate/sql-migrate
         sql-migrate up
 
