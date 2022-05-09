@@ -30,6 +30,25 @@ var updateProblemDifficultiesCmd = &cobra.Command{
 	},
 }
 
+var updateUserFirstAcSubmissionCmd = &cobra.Command{
+	Use:   "update-first-ac-submission",
+	Short: "atcoderの最初のAC提出を更新",
+	Long:  "atcoder problemsのapiを叩いて、得られた情報を元にDBに保存します",
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
+		config, err := conf.LoadConfig()
+		if err != nil {
+			return
+		}
+
+		command := commands.NewUpdateUserFirstAcSubmissionCommand(
+			NewSqlHandler(config.SinDb),
+			NewRequestHandler(),
+		)
+		err = command.Exec()
+		return
+	},
+}
+
 var startApiCmd = &cobra.Command{
 	Use:   "api",
 	Short: "apiを起動",
@@ -42,6 +61,7 @@ var startApiCmd = &cobra.Command{
 
 func Execute() {
 	rootCmd.AddCommand(updateProblemDifficultiesCmd)
+	rootCmd.AddCommand(updateUserFirstAcSubmissionCmd)
 	rootCmd.AddCommand(startApiCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
