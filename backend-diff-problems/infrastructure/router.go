@@ -5,17 +5,12 @@ import (
 	"diff-problems/interfaces/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"os"
 )
 
 var Router *gin.Engine
 
 func Initialize() {
-	cDir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	config, err := conf.LoadConfig(cDir)
+	config, err := conf.LoadConfig()
 	if err != nil {
 		panic(err)
 	}
@@ -28,7 +23,7 @@ func Initialize() {
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	userController := controllers.NewUserController(NewSqlHandler(config.SinDb))
 	v1.Use(cors.New(cors.Config{
-		AllowOrigins: config.ApiV1.AllowOrigins,
+		AllowOrigins: []string{config.ApiV1.AllowOrigin},
 		AllowMethods: []string{"POST", "GET"},
 		AllowHeaders: []string{"Content-Type"},
 	}))

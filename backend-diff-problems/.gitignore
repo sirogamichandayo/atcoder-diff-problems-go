@@ -32,3 +32,6 @@ mysql/data
 
 # realized
 .realize.yml
+
+# private directory
+private

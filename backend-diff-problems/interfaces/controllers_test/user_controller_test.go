@@ -1,8 +1,6 @@
 package controllers_test
 
 import (
-	"diff-problems/config"
-	"diff-problems/infrastructure"
 	"diff-problems/interfaces/controllers"
 	"diff-problems/test_tool"
 	"github.com/gin-gonic/gin"
@@ -12,22 +10,13 @@ import (
 )
 
 func Test_Index正常系(t *testing.T) {
-	sinDb := config.SinDb{
-		Host:     "sin-mysql",
-		Port:     "3306",
-		User:     "root",
-		Password: "secret",
-		Database: "sample",
-	}
-	handler := infrastructure.NewSqlHandler(sinDb)
-	test_tool.TruncateTables(handler)
-
-	_, err := handler.Execute("insert into users (id, first_name, last_name) values (?, ?, ?)", 1, "sirogami", "kurogami")
+	handler, err := test_tool.TruncateTestTables()
 	assert.Nil(t, err)
 
-	userController := controllers.NewUserController(
-		infrastructure.NewSqlHandler(sinDb),
-	)
+	_, err = handler.Execute("insert into users (id, first_name, last_name) values (?, ?, ?)", 1, "sirogami", "kurogami")
+	assert.Nil(t, err)
+
+	userController := controllers.NewUserController(handler)
 
 	response := httptest.NewRecorder()
 	context, _ := gin.CreateTestContext(response)
