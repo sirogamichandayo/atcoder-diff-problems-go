@@ -33,7 +33,7 @@ jobs:
 
     - name: Create database
       run: |
-        mysql --defaults-extra-file=../.github/mysql-dbaccess.cnf -h 127.0.0.1 --ssl-mode=DISABLED --user=root --password=secret --port 3306 -e 'CREATE DATABASE IF NOT EXISTS sin_test CHARACTER SET utf8mb4 COLLATE utf8mb4;'
+        mysql --defaults-extra-file=../.github/mysql-dbaccess.cnf -h 127.0.0.1 --user=root --password=secret --port 3306 -e 'CREATE DATABASE IF NOT EXISTS sin_test CHARACTER SET utf8mb4 COLLATE utf8mb4;'
 
     - name: Create tables
       run: |
