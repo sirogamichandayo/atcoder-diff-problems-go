@@ -1,12 +1,15 @@
 package entity
 
-import "diff-problems/domain/vo"
+import (
+	"diff-problems/domain/vo"
+	"encoding/json"
+)
 
 type UserSubmission struct {
 	UserId    string
 	ProblemId string
 	Result    vo.Result
-	EpochTime uint
+	EpochTime int64
 }
 
 func (s UserSubmission) IsAc() bool {
@@ -20,7 +23,7 @@ func (list *UserSubmissionList) ExactByAc() (acList AcUserSubmissionList, err er
 		if rawSubmission.IsAc() {
 			newSubmission, err := MakeAcUserSubmissionFromUserSubmission(rawSubmission)
 			if err != nil {
-				return
+				return nil, err
 			}
 			acList = append(acList, newSubmission)
 		}
@@ -28,7 +31,7 @@ func (list *UserSubmissionList) ExactByAc() (acList AcUserSubmissionList, err er
 	return
 }
 
-func (list *UserSubmissionList) LastEpochTime() (res uint) {
+func (list *UserSubmissionList) LastEpochTime() (res int64) {
 	res = 0
 	for _, rawSubmission := range *list {
 		if rawSubmission.EpochTime > res {
@@ -38,6 +41,31 @@ func (list *UserSubmissionList) LastEpochTime() (res uint) {
 	return
 }
 
-func MakeUserSubmissionListFromJsonBytes(bytes []byte) (list UserSubmissionList, err error) {
+func (list *UserSubmissionList) IsEmpty() bool {
+	return len(*list) == 0
+}
 
+func MakeUserSubmissionListFromJsonBytes(bytes []byte) (UserSubmissionList, error) {
+	var rawUserSubmissionList []map[string]interface{}
+	err := json.Unmarshal(bytes, &rawUserSubmissionList)
+	if err != nil {
+		return nil, err
+	}
+
+	list := make(UserSubmissionList, 0)
+	for _, submission := range rawUserSubmissionList {
+		userId := submission["user_id"].(string)
+		problemId := submission["problem_id"].(string)
+		result := vo.ParseResult(submission["result"].(string))
+		epochSecond := (int64)(submission["epoch_second"].(float64))
+
+		list = append(list, UserSubmission{
+			UserId:    userId,
+			ProblemId: problemId,
+			Result:    result,
+			EpochTime: epochSecond,
+		})
+	}
+
+	return list, nil
 }

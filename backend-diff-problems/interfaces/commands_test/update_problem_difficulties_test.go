@@ -2,7 +2,7 @@ package commands_test
 
 import (
 	"diff-problems/interfaces/commands"
-	mock_api "diff-problems/interfaces/commands_test/mock"
+	mockApi "diff-problems/interfaces/commands_test/mock"
 	"diff-problems/interfaces/database"
 	"diff-problems/test_tool"
 	"github.com/golang/mock/gomock"
@@ -17,8 +17,8 @@ func Test_正常系(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	requestHandlerMock := mock_api.NewMockRequestHandler(ctrl)
-	responseMock := mock_api.NewMockResponse(ctrl)
+	requestHandlerMock := mockApi.NewMockRequestHandler(ctrl)
+	responseMock := mockApi.NewMockResponse(ctrl)
 
 	requestHandlerMock.
 		EXPECT().

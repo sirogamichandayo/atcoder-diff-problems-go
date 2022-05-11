@@ -5,16 +5,17 @@ import "fmt"
 type Result string
 
 const (
-	Ce  Result = "CE"
-	Mle Result = "MLE"
-	Tle Result = "TLE"
-	Re  Result = "RE"
-	Ole Result = "OLE"
-	Ie  Result = "IE"
-	Wa  Result = "WA"
-	Ac  Result = "AC"
-	Wj  Result = "WJ"
-	Wr  Result = "WR"
+	Ce    Result = "CE"
+	Mle   Result = "MLE"
+	Tle   Result = "TLE"
+	Re    Result = "RE"
+	Ole   Result = "OLE"
+	Ie    Result = "IE"
+	Wa    Result = "WA"
+	Ac    Result = "AC"
+	Wj    Result = "WJ"
+	Wr    Result = "WR"
+	Other Result = "OTHER"
 )
 
 func (r Result) IsAc() bool {
@@ -30,8 +31,10 @@ func (r Result) Valid() error {
 	}
 }
 
-func ParseResult(s string) (r Result, err error) {
-	r = Result(s)
-	err = r.Valid()
-	return
+func ParseResult(s string) Result {
+	r := Result(s)
+	if err := r.Valid(); err != nil {
+		r = Other
+	}
+	return r
 }

@@ -30,8 +30,8 @@ var updateProblemDifficultiesCmd = &cobra.Command{
 	},
 }
 
-var updateUserFirstAcSubmissionCmd = &cobra.Command{
-	Use:   "update-first-ac-submission",
+var updateAllUserFirstAcSubmissionCmd = &cobra.Command{
+	Use:   "update-all-ac-submission",
 	Short: "atcoderの最初のAC提出を更新",
 	Long:  "atcoder problemsのapiを叩いて、得られた情報を元にDBに保存します",
 	RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -44,7 +44,7 @@ var updateUserFirstAcSubmissionCmd = &cobra.Command{
 			NewSqlHandler(config.SinDb),
 			NewRequestHandler(),
 		)
-		err = command.Exec()
+		err = command.UpdateAll()
 		return
 	},
 }
@@ -59,8 +59,28 @@ var startApiCmd = &cobra.Command{
 	},
 }
 
+var updateUserFirstAcSubmissionCmd = &cobra.Command{
+	Use:   "update-ac-submission",
+	Short: "atcoderの最初のAC提出を更新",
+	Long:  "atcoder problemsのapiを叩いて、得られた情報を元にDBに保存します",
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
+		config, err := conf.LoadConfig()
+		if err != nil {
+			return
+		}
+
+		command := commands.NewUpdateUserFirstAcSubmissionCommand(
+			NewSqlHandler(config.SinDb),
+			NewRequestHandler(),
+		)
+		err = command.UpdateFromUpdatedAt()
+		return
+	},
+}
+
 func Execute() {
 	rootCmd.AddCommand(updateProblemDifficultiesCmd)
+	rootCmd.AddCommand(updateAllUserFirstAcSubmissionCmd)
 	rootCmd.AddCommand(updateUserFirstAcSubmissionCmd)
 	rootCmd.AddCommand(startApiCmd)
 	if err := rootCmd.Execute(); err != nil {

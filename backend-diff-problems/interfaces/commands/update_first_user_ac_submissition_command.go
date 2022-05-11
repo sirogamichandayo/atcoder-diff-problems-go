@@ -2,12 +2,13 @@ package commands
 
 import (
 	"diff-problems/interfaces/api"
+	"diff-problems/interfaces/api/atcoder_problems_api"
 	"diff-problems/interfaces/database"
 	"diff-problems/usecase"
 )
 
 type UpdateUserFirstAcSubmissionCommand struct {
-	Interactor usecase.FirstUserAcSubmissionInteractor
+	Interactor usecase.UserFirstAcSubmissionInteractor
 }
 
 func NewUpdateUserFirstAcSubmissionCommand(
@@ -15,17 +16,24 @@ func NewUpdateUserFirstAcSubmissionCommand(
 	requestHandler api.RequestHandler,
 ) *UpdateUserFirstAcSubmissionCommand {
 	return &UpdateUserFirstAcSubmissionCommand{
-		Interactor: usecase.UpdateUserFirstAcSubmissionInteractor{
+		Interactor: usecase.UserFirstAcSubmissionInteractor{
 			UserFirstAcSubmissionRepository: &database.UserFirstAcSubmissionRepository{
 				SqlHandler: sqlHandler,
 			},
-			UserSubmissionRepository: &database.UserSubmissionRepository{
+			UserFirstAcSubmissionUpdatedAtRepository: &database.UserFirstAcSubmissionUpdatedAtRepository{
+				SqlHandler: sqlHandler,
+			},
+			UserSubmissionAtcoderProblemClient: &atcoder_problems_api.UserSubmissionClient{
 				RequestHandler: requestHandler,
 			},
 		},
 	}
 }
 
-func (command *UpdateUserFirstAcSubmissionCommand) Exec() (err error) {
+func (command *UpdateUserFirstAcSubmissionCommand) UpdateAll() (err error) {
+	return command.Interactor.UpdateAll()
+}
 
+func (command *UpdateUserFirstAcSubmissionCommand) UpdateFromUpdatedAt() (err error) {
+	return command.Interactor.UpdateFromUpdatedAt()
 }

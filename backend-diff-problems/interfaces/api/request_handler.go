@@ -6,4 +6,5 @@ type RequestHandler interface {
 
 type Response interface {
 	BodyBytes() ([]byte, error)
+	IsSuccess() bool
 }
