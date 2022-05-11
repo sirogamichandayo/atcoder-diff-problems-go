@@ -29,6 +29,10 @@ func MakeAcUserSubmissionFromUserSubmission(rawSubmission UserSubmission) (
 
 type AcUserSubmissionList []AcUserSubmission
 
+func (list *AcUserSubmissionList) IsEmpty() bool {
+	return len(*list) == 0
+}
+
 func (list *AcUserSubmissionList) MakeValueForUpsertMySql() (string, []interface{}) {
 	listSize := len(*list)
 	placeholders := make([]string, 0, listSize)

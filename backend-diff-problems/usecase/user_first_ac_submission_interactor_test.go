@@ -37,12 +37,11 @@ func Test_UpdateAll_正常系(t *testing.T) {
 		entity.AcUserSubmission{UserId: userId1, ProblemId: problemId1, EpochTime: epochTime1},
 	}
 	emptyUserSubmissionList := entity.UserSubmissionList{}
-	emptyAcUserSubmissionList := entity.AcUserSubmissionList{}
 
 	gomock.InOrder(
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(int64(0))).
+			Fetch(gomock.Eq(int64(1))).
 			Times(1).
 			Return(submissionList, nil),
 		userFirstAcSubmissionRepositoryMock.
@@ -57,19 +56,9 @@ func Test_UpdateAll_正常系(t *testing.T) {
 			Return(nil),
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(epochTime2)).
+			Fetch(gomock.Eq(epochTime2+1)).
 			Times(1).
 			Return(emptyUserSubmissionList, nil),
-		userFirstAcSubmissionRepositoryMock.
-			EXPECT().
-			BulkUpsert(emptyAcUserSubmissionList).
-			Times(1).
-			Return(nil),
-		UserFirstAcSubmissionUpdatedAtRepositoryMock.
-			EXPECT().
-			Update(gomock.Eq(epochTime2)).
-			Times(1).
-			Return(nil),
 	)
 
 	interactor := UserFirstAcSubmissionInteractor{
@@ -93,7 +82,7 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 	UserSubmissionAtCoderProblemClientMock :=
 		mockUsecase.NewMockUserSubmissionAtCoderProblemClient(ctrl)
 
-	startTime := int64(5000)
+	updatedTime := int64(5000)
 	userId1 := "user_id1"
 	problemId1 := "problem_id1"
 	result1 := vo.Ac
@@ -111,17 +100,16 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 		entity.AcUserSubmission{UserId: userId1, ProblemId: problemId1, EpochTime: epochTime1},
 	}
 	emptyUserSubmissionList := entity.UserSubmissionList{}
-	emptyAcUserSubmissionList := entity.AcUserSubmissionList{}
 
 	gomock.InOrder(
 		UserFirstAcSubmissionUpdatedAtRepositoryMock.
 			EXPECT().
 			Get().
 			Times(1).
-			Return(startTime, nil),
+			Return(updatedTime, nil),
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(startTime)).
+			Fetch(gomock.Eq(updatedTime+1)).
 			Times(1).
 			Return(submissionList, nil),
 		userFirstAcSubmissionRepositoryMock.
@@ -136,19 +124,9 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 			Return(nil),
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(epochTime2)).
+			Fetch(gomock.Eq(epochTime2+1)).
 			Times(1).
 			Return(emptyUserSubmissionList, nil),
-		userFirstAcSubmissionRepositoryMock.
-			EXPECT().
-			BulkUpsert(emptyAcUserSubmissionList).
-			Times(1).
-			Return(nil),
-		UserFirstAcSubmissionUpdatedAtRepositoryMock.
-			EXPECT().
-			Update(gomock.Eq(epochTime2)).
-			Times(1).
-			Return(nil),
 	)
 
 	interactor := UserFirstAcSubmissionInteractor{
