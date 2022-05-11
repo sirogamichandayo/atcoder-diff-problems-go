@@ -18,7 +18,8 @@ func (s UserSubmission) IsAc() bool {
 
 type UserSubmissionList []UserSubmission
 
-func (list *UserSubmissionList) ExactByAc() (acList AcUserSubmissionList, err error) {
+func (list *UserSubmissionList) ExactByAc() (AcUserSubmissionList, error) {
+	acList := make(AcUserSubmissionList, 0)
 	for _, rawSubmission := range *list {
 		if rawSubmission.IsAc() {
 			newSubmission, err := MakeAcUserSubmissionFromUserSubmission(rawSubmission)
@@ -28,7 +29,7 @@ func (list *UserSubmissionList) ExactByAc() (acList AcUserSubmissionList, err er
 			acList = append(acList, newSubmission)
 		}
 	}
-	return
+	return acList, nil
 }
 
 func (list *UserSubmissionList) LastEpochTime() (res int64) {
