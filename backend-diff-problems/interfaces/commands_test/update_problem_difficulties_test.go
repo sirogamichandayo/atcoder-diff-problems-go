@@ -58,7 +58,7 @@ WHERE
 	assert.True(t, row1.Next())
 	assert.Nil(t, row1.Scan(&rawDifficulty, &clipDifficulty))
 	assert.Equal(t, float64(-849), *rawDifficulty)
-	assert.Equal(t, float64(18), *clipDifficulty)
+	assert.Equal(t, 17.61876534994966, *clipDifficulty)
 
 	row2, err := sqlHandler.Query(
 		`
