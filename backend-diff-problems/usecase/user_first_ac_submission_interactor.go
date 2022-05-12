@@ -65,7 +65,7 @@ func (interactor *UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(sinc
 	}
 
 	if userAcSubmissionList.IsEmpty() {
-		return userSubmissionList.LastEpochTime(), true, nil
+		return userSubmissionList.LastEpochTime(), false, nil
 	}
 	err = interactor.UserFirstAcSubmissionRepository.BulkUpsert(userAcSubmissionList)
 	if err != nil {

@@ -12,11 +12,13 @@ type UserSubmissionClient struct {
 
 func (client *UserSubmissionClient) Fetch(fromEpochTime int64) (list entity.UserSubmissionList, err error) {
 	url := fmt.Sprintf("https://kenkoooo.com/atcoder/atcoder-api/v3/from/%d", fromEpochTime)
+	fmt.Println(url)
 	res, err := client.Get(url, nil)
 	if err != nil {
 		return
 	}
 	if !res.IsSuccess() {
+		fmt.Println("a")
 		bytes, err := res.BodyBytes()
 		if err != nil {
 			return nil, fmt.Errorf("リクエスト失敗しました。エラーメッセージの生成にも失敗しました")
@@ -28,7 +30,6 @@ func (client *UserSubmissionClient) Fetch(fromEpochTime int64) (list entity.User
 	if err != nil {
 		return
 	}
-	fmt.Println(string(bytes))
 
 	list, err = entity.MakeUserSubmissionListFromJsonBytes(bytes)
 	return
