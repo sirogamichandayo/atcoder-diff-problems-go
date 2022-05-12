@@ -39,6 +39,10 @@ type Response struct {
 	Response *http.Response
 }
 
+func (res Response) IsSuccess() bool {
+	return 200 <= res.Response.StatusCode && res.Response.StatusCode < 300
+}
+
 func (res Response) BodyBytes() ([]byte, error) {
 	reader, err := gzip.NewReader(res.Response.Body)
 	if err != nil {

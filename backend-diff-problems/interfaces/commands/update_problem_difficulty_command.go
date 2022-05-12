@@ -11,13 +11,16 @@ type UpdateProblemDifficultyCommand struct {
 	Interactor usecase.ProblemDifficultyInteractor
 }
 
-func NewUpdateProblemDifficultyCommand(sqlHandler database.SqlHandler, requestHandler api.RequestHandler) *UpdateProblemDifficultyCommand {
+func NewUpdateProblemDifficultyCommand(
+	sqlHandler database.SqlHandler,
+	requestHandler api.RequestHandler,
+) *UpdateProblemDifficultyCommand {
 	return &UpdateProblemDifficultyCommand{
 		Interactor: usecase.ProblemDifficultyInteractor{
 			ProblemDifficultyRepository: &database.ProblemDifficultyRepository{
 				SqlHandler: sqlHandler,
 			},
-			ProblemDifficultyAtcoderProblemClient: &atcoder_problems_api.ProblemDifficultyClient{
+			ProblemDifficultyAtCoderProblemClient: &atcoder_problems_api.ProblemDifficultyClient{
 				RequestHandler: requestHandler,
 			},
 		},
