@@ -13,7 +13,7 @@ func (repo *ProblemDifficultyRepository) BulkUpsert(u entity.ProblemDifficultyLi
 	placeholders, values := u.MakeValueForUpsertMySql()
 	query := fmt.Sprintf(
 		`
-INSERT INTO product_difficulties (problem_id, difficulty)
+INSERT INTO problem_difficulties (problem_id, difficulty, clip_difficulty)
 VALUES %s
 ON DUPLICATE KEY UPDATE problem_id = VALUES(problem_id);
 `,

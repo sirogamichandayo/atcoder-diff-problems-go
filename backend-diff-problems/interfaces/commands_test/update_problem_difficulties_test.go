@@ -38,14 +38,15 @@ func Test_正常系(t *testing.T) {
 	err = command.Exec()
 	assert.Nil(t, err)
 
-	var difficulty *float64
+	var rawDifficulty *float64
+	var clipDifficulty *float64
 
 	row1, err := sqlHandler.Query(
 		`
 SELECT 
-    difficulty 
+    difficulty, clip_difficulty
 FROM 
-    product_difficulties
+    problem_difficulties
 WHERE
     problem_id = "abc138_a"`)
 
@@ -55,15 +56,16 @@ WHERE
 	}(row1)
 
 	assert.True(t, row1.Next())
-	assert.Nil(t, row1.Scan(&difficulty))
-	assert.Equal(t, float64(-849), *difficulty)
+	assert.Nil(t, row1.Scan(&rawDifficulty, &clipDifficulty))
+	assert.Equal(t, float64(-849), *rawDifficulty)
+	assert.Equal(t, float64(18), *clipDifficulty)
 
 	row2, err := sqlHandler.Query(
 		`
 SELECT
-    difficulty
+    difficulty, clip_difficulty
 FROM
-    product_difficulties
+    problem_difficulties
 WHERE
     problem_id = "abc138_b"`)
 
@@ -73,6 +75,7 @@ WHERE
 	}(row2)
 
 	assert.True(t, row2.Next())
-	assert.Nil(t, row2.Scan(&difficulty))
-	assert.Nil(t, difficulty)
+	assert.Nil(t, row2.Scan(&rawDifficulty, &clipDifficulty))
+	assert.Nil(t, rawDifficulty)
+	assert.Nil(t, clipDifficulty)
 }

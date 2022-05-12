@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"database/sql"
+	"database/sql/driver"
 	"diff-problems/config"
 	"diff-problems/interfaces/database"
 	"fmt"
@@ -117,3 +118,5 @@ func (r SqlRow) Next() bool {
 func (r SqlRow) Close() error {
 	return r.Rows.Close()
 }
+
+type Value driver.Value
