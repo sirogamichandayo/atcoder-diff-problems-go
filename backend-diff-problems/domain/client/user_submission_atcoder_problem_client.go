@@ -2,6 +2,6 @@ package client
 
 import "diff-problems/domain/entity"
 
-type UserSubmissionAtCoderProblemClient interface {
-	Fetch(int64) (entity.UserSubmissionList, error)
+type UserSubmissionClient interface {
+	FetchSinceByEpochTime(int64) (entity.UserSubmissionList, error)
 }

@@ -10,14 +10,13 @@ type UserSubmissionClient struct {
 	api.RequestHandler
 }
 
-func (client *UserSubmissionClient) Fetch(fromEpochTime int64) (list entity.UserSubmissionList, err error) {
+func (client *UserSubmissionClient) FetchSinceByEpochTime(fromEpochTime int64) (list entity.UserSubmissionList, err error) {
 	url := fmt.Sprintf("https://kenkoooo.com/atcoder/atcoder-api/v3/from/%d", fromEpochTime)
 	res, err := client.Get(url, nil)
 	if err != nil {
 		return
 	}
 	if !res.IsSuccess() {
-		fmt.Println("a")
 		bytes, err := res.BodyBytes()
 		if err != nil {
 			return nil, fmt.Errorf("リクエスト失敗しました。エラーメッセージの生成にも失敗しました")
