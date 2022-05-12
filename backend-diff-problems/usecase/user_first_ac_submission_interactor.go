@@ -10,7 +10,7 @@ import (
 type UserFirstAcSubmissionInteractor struct {
 	UserFirstAcSubmissionRepository          repository.UserFirstAcSubmissionRepository
 	UserFirstAcSubmissionUpdatedAtRepository repository.UserFirstAcSubmissionUpdatedAtRepository
-	UserSubmissionAtCoderProblemClient       client.UserSubmissionAtCoderProblemClient
+	UserSubmissionAtCoderProblemClient       client.UserSubmissionClient
 }
 
 // UpdateAll は最初から最後まで更新します
@@ -52,7 +52,7 @@ func (interactor *UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(sinc
 	isLast bool,
 	err error,
 ) {
-	userSubmissionList, err := interactor.UserSubmissionAtCoderProblemClient.Fetch(sinceEpochTime)
+	userSubmissionList, err := interactor.UserSubmissionAtCoderProblemClient.FetchSinceByEpochTime(sinceEpochTime)
 	if err != nil {
 		return
 	}
