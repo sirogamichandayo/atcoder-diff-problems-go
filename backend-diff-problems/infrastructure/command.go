@@ -49,6 +49,25 @@ var updateAllUserFirstAcSubmissionCmd = &cobra.Command{
 	},
 }
 
+var updateRankingCmd = &cobra.Command{
+	Use:   "update-ranking",
+	Short: "ランキング上方をupdate",
+	Long:  "すでにクロール済みの情報からランキングを更新します",
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
+		config, err := conf.LoadConfig()
+		if err != nil {
+			return
+		}
+
+		command := commands.NewUpdateRankingCommand(
+			NewSqlHandler(config.SinDb),
+			NewRequestHandler(),
+		)
+		err = command.Update()
+		return
+	},
+}
+
 var startApiCmd = &cobra.Command{
 	Use:   "api",
 	Short: "apiを起動",
