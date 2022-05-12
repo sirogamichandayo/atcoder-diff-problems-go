@@ -1,10 +1,13 @@
 package usecase
 
-import "diff-problems/domain/entity"
+import (
+	"diff-problems/domain/client"
+	"diff-problems/domain/repository"
+)
 
 type ProblemDifficultyInteractor struct {
-	ProblemDifficultyRepository           ProblemDifficultyRepository
-	ProblemDifficultyAtCoderProblemClient ProblemDifficultyAtCoderProblemClient
+	ProblemDifficultyRepository           repository.ProblemDifficultyRepository
+	ProblemDifficultyAtCoderProblemClient client.ProblemDifficultyAtCoderProblemClient
 }
 
 func (interactor *ProblemDifficultyInteractor) Update() (err error) {
@@ -15,12 +18,4 @@ func (interactor *ProblemDifficultyInteractor) Update() (err error) {
 	err = interactor.ProblemDifficultyRepository.BulkUpsert(problemDifficultyList)
 
 	return
-}
-
-type ProblemDifficultyRepository interface {
-	BulkUpsert(u entity.ProblemDifficultyList) (err error)
-}
-
-type ProblemDifficultyAtCoderProblemClient interface {
-	Fetch() (list entity.ProblemDifficultyList, err error)
 }
