@@ -1,15 +1,16 @@
 package usecase
 
 import (
-	"diff-problems/domain/entity"
+	"diff-problems/domain/client"
+	"diff-problems/domain/repository"
 	"fmt"
 	"time"
 )
 
 type UserFirstAcSubmissionInteractor struct {
-	UserFirstAcSubmissionRepository          UserFirstAcSubmissionRepository
-	UserFirstAcSubmissionUpdatedAtRepository UserFirstAcSubmissionUpdatedAtRepository
-	UserSubmissionAtCoderProblemClient       UserSubmissionAtCoderProblemClient
+	UserFirstAcSubmissionRepository          repository.UserFirstAcSubmissionRepository
+	UserFirstAcSubmissionUpdatedAtRepository repository.UserFirstAcSubmissionUpdatedAtRepository
+	UserSubmissionAtCoderProblemClient       client.UserSubmissionAtCoderProblemClient
 }
 
 // UpdateAll は最初から最後まで更新します
@@ -77,17 +78,4 @@ func (interactor *UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(sinc
 	err = interactor.UserFirstAcSubmissionUpdatedAtRepository.Update(lastEpochTime)
 
 	return lastEpochTime, false, err
-}
-
-type UserFirstAcSubmissionUpdatedAtRepository interface {
-	Get() (int64, error)
-	Update(int64) error
-}
-
-type UserFirstAcSubmissionRepository interface {
-	BulkUpsert(entity.AcUserSubmissionList) error
-}
-
-type UserSubmissionAtCoderProblemClient interface {
-	Fetch(int64) (entity.UserSubmissionList, error)
 }
