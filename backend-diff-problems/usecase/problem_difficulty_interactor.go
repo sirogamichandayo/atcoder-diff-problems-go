@@ -1,26 +1,20 @@
 package usecase
 
-import "diff-problems/domain/entity"
+import (
+	"diff-problems/domain/client"
+	"diff-problems/domain/repository"
+)
 
 type ProblemDifficultyInteractor struct {
-	ProblemDifficultyRepository           ProblemDifficultyRepository
-	ProblemDifficultyAtCoderProblemClient ProblemDifficultyAtCoderProblemClient
+	ProblemDifficultyRepository           repository.ProblemDifficultyRepository
+	ProblemDifficultyAtCoderProblemClient client.ProblemDifficultyClient
 }
 
-func (interactor *ProblemDifficultyInteractor) Update() (err error) {
-	problemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Fetch()
+func (interactor *ProblemDifficultyInteractor) Update() error {
+	fetchedProblemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Fetch()
 	if err != nil {
-		return
+		return err
 	}
-	err = interactor.ProblemDifficultyRepository.BulkUpsert(problemDifficultyList)
 
-	return
-}
-
-type ProblemDifficultyRepository interface {
-	BulkUpsert(u entity.ProblemDifficultyList) (err error)
-}
-
-type ProblemDifficultyAtCoderProblemClient interface {
-	Fetch() (list entity.ProblemDifficultyList, err error)
+	return interactor.ProblemDifficultyRepository.BulkUpsert(fetchedProblemDifficultyList)
 }

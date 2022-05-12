@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"database/sql"
+	"database/sql/driver"
 	"diff-problems/config"
 	"diff-problems/interfaces/database"
 	"fmt"
@@ -26,7 +27,7 @@ func NewSqlHandler(db config.SinDb) database.SqlHandler {
 	return sqlHandler
 }
 
-func (handler *SqlHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
+func (handler SqlHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
 	res := SqlResult{}
 	result, err := handler.Conn.Exec(statement, args...)
 	if err != nil {
@@ -36,7 +37,7 @@ func (handler *SqlHandler) Execute(statement string, args ...interface{}) (datab
 	return res, nil
 }
 
-func (handler *SqlHandler) Query(statement string, args ...interface{}) (database.Row, error) {
+func (handler SqlHandler) Query(statement string, args ...interface{}) (database.Row, error) {
 	rows, err := handler.Conn.Query(statement, args...)
 	if err != nil {
 		return new(SqlRow), err
@@ -46,7 +47,7 @@ func (handler *SqlHandler) Query(statement string, args ...interface{}) (databas
 	return row, nil
 }
 
-func (handler *SqlHandler) Transaction(txFunc func(database.TransactionHandler) error) error {
+func (handler SqlHandler) Transaction(txFunc func(database.TransactionHandler) error) error {
 	tx, err := handler.Conn.Begin()
 	if err != nil {
 		return err
@@ -70,7 +71,7 @@ type TransactionHandler struct {
 	Conn *sql.Tx
 }
 
-func (handler *TransactionHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
+func (handler TransactionHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
 	res := SqlResult{}
 	result, err := handler.Conn.Exec(statement, args...)
 	if err != nil {
@@ -80,7 +81,7 @@ func (handler *TransactionHandler) Execute(statement string, args ...interface{}
 	return res, nil
 }
 
-func (handler *TransactionHandler) Query(statement string, args ...interface{}) (database.Row, error) {
+func (handler TransactionHandler) Query(statement string, args ...interface{}) (database.Row, error) {
 	rows, err := handler.Conn.Query(statement, args...)
 	if err != nil {
 		return new(SqlRow), err
@@ -117,3 +118,5 @@ func (r SqlRow) Next() bool {
 func (r SqlRow) Close() error {
 	return r.Rows.Close()
 }
+
+type Value driver.Value

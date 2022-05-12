@@ -1,27 +1,34 @@
 package entity
 
 import (
+	"diff-problems/domain/vo"
 	"encoding/json"
 	"strings"
 )
 
 type ProblemDifficulty struct {
-	ProblemId  string
-	Difficulty *float64
+	ProblemId      string
+	Difficulty     vo.RawDifficulty
+	ClipDifficulty vo.ClipDifficulty
 }
 
 type ProblemDifficultyList []ProblemDifficulty
 
-func (list *ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
-	listSize := len(*list)
+func (list ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
+	listSize := len(list)
 	placeholders := make([]string, 0, listSize)
 	for i := 0; i < listSize; i++ {
-		placeholders = append(placeholders, "(?,?)")
+		placeholders = append(placeholders, "(?,?,?)")
 	}
 
-	values := make([]interface{}, 0, listSize*2)
-	for _, problem := range *list {
-		values = append(values, problem.ProblemId, problem.Difficulty)
+	values := make([]interface{}, 0, listSize*3)
+	for _, problem := range list {
+		values = append(
+			values,
+			problem.ProblemId,
+			problem.Difficulty,
+			problem.ClipDifficulty,
+		)
 	}
 
 	return strings.Join(placeholders, ","), values
@@ -37,15 +44,13 @@ func MakeProblemDifficultyListFromJsonBytes(bytes []byte) (list ProblemDifficult
 	for problemId, problem := range rawProblemDifficultyMap {
 		rawDifficulty, hasKey := problem["difficulty"]
 
-		var difficulty *float64
-		if !hasKey {
-			difficulty = nil
-		} else {
-			tmp := rawDifficulty.(float64)
-			difficulty = &tmp
+		difficultyVo, err := vo.NewRawDifficulty(rawDifficulty, hasKey)
+		if err != nil {
+			return nil, err
 		}
-
-		list = append(list, ProblemDifficulty{ProblemId: problemId, Difficulty: difficulty})
+		list = append(list, ProblemDifficulty{
+			ProblemId: problemId, Difficulty: difficultyVo, ClipDifficulty: difficultyVo.MakeClipDifficulty(),
+		})
 	}
 
 	return

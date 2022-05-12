@@ -18,7 +18,7 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	UserFirstAcSubmissionUpdatedAtRepositoryMock :=
 		mockUsecase.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
 	UserSubmissionAtCoderProblemClientMock :=
-		mockUsecase.NewMockUserSubmissionAtCoderProblemClient(ctrl)
+		mockUsecase.NewMockUserSubmissionClient(ctrl)
 
 	userId1 := "user_id1"
 	problemId1 := "problem_id1"
@@ -41,7 +41,7 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	gomock.InOrder(
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(int64(1))).
+			FetchSinceByEpochTime(gomock.Eq(int64(1))).
 			Times(1).
 			Return(submissionList, nil),
 		userFirstAcSubmissionRepositoryMock.
@@ -56,7 +56,7 @@ func Test_UpdateAll_正常系(t *testing.T) {
 			Return(nil),
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(epochTime2+1)).
+			FetchSinceByEpochTime(gomock.Eq(epochTime2+1)).
 			Times(1).
 			Return(emptyUserSubmissionList, nil),
 	)
@@ -80,7 +80,7 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 	UserFirstAcSubmissionUpdatedAtRepositoryMock :=
 		mockUsecase.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
 	UserSubmissionAtCoderProblemClientMock :=
-		mockUsecase.NewMockUserSubmissionAtCoderProblemClient(ctrl)
+		mockUsecase.NewMockUserSubmissionClient(ctrl)
 
 	updatedTime := int64(5000)
 	userId1 := "user_id1"
@@ -109,7 +109,7 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 			Return(updatedTime, nil),
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(updatedTime+1)).
+			FetchSinceByEpochTime(gomock.Eq(updatedTime+1)).
 			Times(1).
 			Return(submissionList, nil),
 		userFirstAcSubmissionRepositoryMock.
@@ -124,7 +124,7 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 			Return(nil),
 		UserSubmissionAtCoderProblemClientMock.
 			EXPECT().
-			Fetch(gomock.Eq(epochTime2+1)).
+			FetchSinceByEpochTime(gomock.Eq(epochTime2+1)).
 			Times(1).
 			Return(emptyUserSubmissionList, nil),
 	)
