@@ -10,17 +10,17 @@ import (
 type UserFirstAcSubmissionInteractor struct {
 	UserFirstAcSubmissionRepository          repository.UserFirstAcSubmissionRepository
 	UserFirstAcSubmissionUpdatedAtRepository repository.UserFirstAcSubmissionUpdatedAtRepository
-	UserSubmissionAtCoderProblemClient       client.UserSubmissionAtCoderProblemClient
+	UserSubmissionAtCoderProblemClient       client.UserSubmissionClient
 }
 
 // UpdateAll は最初から最後まで更新します
-func (interactor *UserFirstAcSubmissionInteractor) UpdateAll() (err error) {
+func (interactor UserFirstAcSubmissionInteractor) UpdateAll() (err error) {
 	err = interactor.updateToTheEnd(0)
 	return
 }
 
 // UpdateFromUpdatedAt は更新済みの時間から、提出がなくなるまで更新します
-func (interactor *UserFirstAcSubmissionInteractor) UpdateFromUpdatedAt() (err error) {
+func (interactor UserFirstAcSubmissionInteractor) UpdateFromUpdatedAt() (err error) {
 	updatedEpochTime, err := interactor.UserFirstAcSubmissionUpdatedAtRepository.Get()
 	if err != nil {
 		return
@@ -30,7 +30,7 @@ func (interactor *UserFirstAcSubmissionInteractor) UpdateFromUpdatedAt() (err er
 }
 
 // update 与えられたepoch_timeから提出がなくなるまで更新します
-func (interactor *UserFirstAcSubmissionInteractor) updateToTheEnd(updatedEpochTime int64) (err error) {
+func (interactor UserFirstAcSubmissionInteractor) updateToTheEnd(updatedEpochTime int64) (err error) {
 	var isLast bool
 	for {
 		updatedEpochTime, isLast, err = interactor.fetchSubmissionAndUpdate(updatedEpochTime + 1)
@@ -47,12 +47,12 @@ func (interactor *UserFirstAcSubmissionInteractor) updateToTheEnd(updatedEpochTi
 }
 
 // fetchSubmissionAndUpdate はsinceEpochTimeからの提出をapiで取得して時間の最も早い提出を保存し、更新した最後の時間を保存します
-func (interactor *UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(sinceEpochTime int64) (
+func (interactor UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(sinceEpochTime int64) (
 	lastEpochTime int64,
 	isLast bool,
 	err error,
 ) {
-	userSubmissionList, err := interactor.UserSubmissionAtCoderProblemClient.Fetch(sinceEpochTime)
+	userSubmissionList, err := interactor.UserSubmissionAtCoderProblemClient.FetchSinceByEpochTime(sinceEpochTime)
 	if err != nil {
 		return
 	}

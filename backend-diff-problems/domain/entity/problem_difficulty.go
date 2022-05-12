@@ -14,15 +14,15 @@ type ProblemDifficulty struct {
 
 type ProblemDifficultyList []ProblemDifficulty
 
-func (list *ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
-	listSize := len(*list)
+func (list ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
+	listSize := len(list)
 	placeholders := make([]string, 0, listSize)
 	for i := 0; i < listSize; i++ {
 		placeholders = append(placeholders, "(?,?,?)")
 	}
 
 	values := make([]interface{}, 0, listSize*3)
-	for _, problem := range *list {
+	for _, problem := range list {
 		values = append(
 			values,
 			problem.ProblemId,
