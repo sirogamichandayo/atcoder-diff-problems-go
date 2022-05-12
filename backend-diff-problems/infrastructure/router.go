@@ -9,7 +9,7 @@ import (
 
 var Router *gin.Engine
 
-func Initialize() {
+func RouterInitialize() {
 	config, err := conf.LoadConfig()
 	if err != nil {
 		panic(err)

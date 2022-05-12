@@ -4,11 +4,11 @@ import "diff-problems/domain/entity"
 
 type ProblemDifficultyInteractor struct {
 	ProblemDifficultyRepository           ProblemDifficultyRepository
-	ProblemDifficultyAtcoderProblemClient ProblemDifficultyAtcoderProblemClient
+	ProblemDifficultyAtCoderProblemClient ProblemDifficultyAtCoderProblemClient
 }
 
 func (interactor *ProblemDifficultyInteractor) Update() (err error) {
-	problemDifficultyList, err := interactor.ProblemDifficultyAtcoderProblemClient.Fetch()
+	problemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Fetch()
 	if err != nil {
 		return
 	}
@@ -21,6 +21,6 @@ type ProblemDifficultyRepository interface {
 	BulkUpsert(u entity.ProblemDifficultyList) (err error)
 }
 
-type ProblemDifficultyAtcoderProblemClient interface {
+type ProblemDifficultyAtCoderProblemClient interface {
 	Fetch() (list entity.ProblemDifficultyList, err error)
 }

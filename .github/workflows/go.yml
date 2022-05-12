@@ -48,13 +48,9 @@ jobs:
         go install -v github.com/rubenv/sql-migrate/sql-migrate
         sql-migrate up --env=test
 
-    - name: Build Api
-      run: | 
-        go build -v ./api.go
-
-    - name: Build Cli
+    - name: Build
       run: |
-        go build -v ./cli.go
+        go build -v ./...
 
     - name: Test
       run: go test -v ./...

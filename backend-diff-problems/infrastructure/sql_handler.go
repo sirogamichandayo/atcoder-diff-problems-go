@@ -46,6 +46,50 @@ func (handler *SqlHandler) Query(statement string, args ...interface{}) (databas
 	return row, nil
 }
 
+func (handler *SqlHandler) Transaction(txFunc func(database.TransactionHandler) error) error {
+	tx, err := handler.Conn.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if p := recover(); p != nil {
+			tx.Rollback()
+			panic(p) // re-throw panic after Rollback
+		} else if err != nil {
+			tx.Rollback() // err is non-nil; don't change it
+		} else {
+			err = tx.Commit() // err is nil; if Commit returns error update err
+		}
+	}()
+
+	err = txFunc(&TransactionHandler{tx})
+	return err
+}
+
+type TransactionHandler struct {
+	Conn *sql.Tx
+}
+
+func (handler *TransactionHandler) Execute(statement string, args ...interface{}) (database.Result, error) {
+	res := SqlResult{}
+	result, err := handler.Conn.Exec(statement, args...)
+	if err != nil {
+		return res, err
+	}
+	res.Result = result
+	return res, nil
+}
+
+func (handler *TransactionHandler) Query(statement string, args ...interface{}) (database.Row, error) {
+	rows, err := handler.Conn.Query(statement, args...)
+	if err != nil {
+		return new(SqlRow), err
+	}
+	row := new(SqlRow)
+	row.Rows = rows
+	return row, nil
+}
+
 type SqlResult struct {
 	Result sql.Result
 }

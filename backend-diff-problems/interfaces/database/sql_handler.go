@@ -3,6 +3,12 @@ package database
 type SqlHandler interface {
 	Execute(string, ...interface{}) (Result, error)
 	Query(string, ...interface{}) (Row, error)
+	Transaction(txFunc func(TransactionHandler) error) error
+}
+
+type TransactionHandler interface {
+	Execute(string, ...interface{}) (Result, error)
+	Query(string, ...interface{}) (Row, error)
 }
 
 type Result interface {
