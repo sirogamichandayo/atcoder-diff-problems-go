@@ -1,10 +1,6 @@
 package entity
 
-import (
-	"github.com/stretchr/testify/assert"
-	"testing"
-)
-
+/*
 func Test_makeFromJsonBytes(t *testing.T) {
 	json := `{"abc138_a":{"difficulty": -848}, "abc138_b": {}}`
 
@@ -37,3 +33,4 @@ func Test_makeValueForUpsertMySql(t *testing.T) {
 	assert.Equal(t, problemId2, values[2])
 	assert.Nil(t, values[3])
 }
+*/
