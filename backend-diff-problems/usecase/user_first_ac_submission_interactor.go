@@ -9,7 +9,7 @@ import (
 type UserFirstAcSubmissionInteractor struct {
 	UserFirstAcSubmissionRepository          UserFirstAcSubmissionRepository
 	UserFirstAcSubmissionUpdatedAtRepository UserFirstAcSubmissionUpdatedAtRepository
-	UserSubmissionAtcoderProblemClient       UserSubmissionAtCoderProblemClient
+	UserSubmissionAtCoderProblemClient       UserSubmissionAtCoderProblemClient
 }
 
 // UpdateAll は最初から最後まで更新します
@@ -32,7 +32,7 @@ func (interactor *UserFirstAcSubmissionInteractor) UpdateFromUpdatedAt() (err er
 func (interactor *UserFirstAcSubmissionInteractor) updateToTheEnd(updatedEpochTime int64) (err error) {
 	var isLast bool
 	for {
-		updatedEpochTime, isLast, err = interactor.fetchSubmissionAndUpdate(updatedEpochTime)
+		updatedEpochTime, isLast, err = interactor.fetchSubmissionAndUpdate(updatedEpochTime + 1)
 		fmt.Println("updated epoch time : ", updatedEpochTime)
 		if err != nil {
 			return
@@ -51,29 +51,32 @@ func (interactor *UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(sinc
 	isLast bool,
 	err error,
 ) {
-	userSubmissionList, err := interactor.UserSubmissionAtcoderProblemClient.Fetch(sinceEpochTime)
+	userSubmissionList, err := interactor.UserSubmissionAtCoderProblemClient.Fetch(sinceEpochTime)
 	if err != nil {
 		return
+	}
+
+	if userSubmissionList.IsEmpty() {
+		return sinceEpochTime, true, nil
 	}
 	userAcSubmissionList, err := userSubmissionList.ExactByAc()
 	if err != nil {
 		return
+	}
+
+	if userAcSubmissionList.IsEmpty() {
+		return userSubmissionList.LastEpochTime(), false, nil
 	}
 	err = interactor.UserFirstAcSubmissionRepository.BulkUpsert(userAcSubmissionList)
 	if err != nil {
 		return
 	}
 
-	// isEmptyがtrueのときにlastEpochTimeに0が入るのを防ぐif文
-	isEmpty := userSubmissionList.IsEmpty()
-	if isEmpty {
-		lastEpochTime = sinceEpochTime
-	} else {
-		lastEpochTime = userSubmissionList.LastEpochTime()
-	}
+	lastEpochTime = userSubmissionList.LastEpochTime()
+
 	err = interactor.UserFirstAcSubmissionUpdatedAtRepository.Update(lastEpochTime)
 
-	return
+	return lastEpochTime, false, err
 }
 
 type UserFirstAcSubmissionUpdatedAtRepository interface {

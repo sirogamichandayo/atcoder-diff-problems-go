@@ -23,7 +23,7 @@ func NewUpdateUserFirstAcSubmissionCommand(
 			UserFirstAcSubmissionUpdatedAtRepository: &database.UserFirstAcSubmissionUpdatedAtRepository{
 				SqlHandler: sqlHandler,
 			},
-			UserSubmissionAtcoderProblemClient: &atcoder_problems_api.UserSubmissionClient{
+			UserSubmissionAtCoderProblemClient: &atcoder_problems_api.UserSubmissionClient{
 				RequestHandler: requestHandler,
 			},
 		},
