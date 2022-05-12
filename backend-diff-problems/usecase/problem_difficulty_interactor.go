@@ -7,11 +7,11 @@ import (
 
 type ProblemDifficultyInteractor struct {
 	ProblemDifficultyRepository           repository.ProblemDifficultyRepository
-	ProblemDifficultyAtCoderProblemClient client.ProblemDifficultyRepository
+	ProblemDifficultyAtCoderProblemClient client.ProblemDifficultyClient
 }
 
 func (interactor *ProblemDifficultyInteractor) Update() (err error) {
-	problemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Get()
+	problemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Fetch()
 	if err != nil {
 		return
 	}
