@@ -12,7 +12,6 @@ type UserSubmissionClient struct {
 
 func (client *UserSubmissionClient) Fetch(fromEpochTime int64) (list entity.UserSubmissionList, err error) {
 	url := fmt.Sprintf("https://kenkoooo.com/atcoder/atcoder-api/v3/from/%d", fromEpochTime)
-	fmt.Println(url)
 	res, err := client.Get(url, nil)
 	if err != nil {
 		return

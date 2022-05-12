@@ -84,7 +84,6 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	var a string
 	var b string
 	var c int
-
 	for rows.Next() {
 		err := rows.Scan(&a, &b, &c)
 		assert.Nil(t, err)
