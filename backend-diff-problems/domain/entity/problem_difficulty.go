@@ -14,14 +14,6 @@ type ProblemDifficulty struct {
 
 type ProblemDifficultyList []ProblemDifficulty
 
-func (list ProblemDifficultyList) ProblemIdList() []string {
-	res := make([]string, 0, len(list))
-	for _, d := range list {
-		res = append(res, d.ProblemId)
-	}
-	return res
-}
-
 func (list ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
 	listSize := len(list)
 	placeholders := make([]string, 0, listSize)

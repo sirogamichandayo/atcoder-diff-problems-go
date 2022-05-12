@@ -10,12 +10,11 @@ type ProblemDifficultyInteractor struct {
 	ProblemDifficultyAtCoderProblemClient client.ProblemDifficultyClient
 }
 
-func (interactor *ProblemDifficultyInteractor) Update() (err error) {
-	problemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Fetch()
+func (interactor *ProblemDifficultyInteractor) Update() error {
+	fetchedProblemDifficultyList, err := interactor.ProblemDifficultyAtCoderProblemClient.Fetch()
 	if err != nil {
-		return
+		return err
 	}
-	err = interactor.ProblemDifficultyRepository.BulkUpsert(problemDifficultyList)
 
-	return
+	return interactor.ProblemDifficultyRepository.BulkUpsert(fetchedProblemDifficultyList)
 }
