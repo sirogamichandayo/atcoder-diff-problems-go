@@ -3,6 +3,6 @@ package repository
 
 import "diff-problems/domain/entity"
 
-type ProblemDifficultyRepository interface {
-	BulkUpsert(entity.ProblemDifficultyList) error
+type UserSolveProblemDifficultySumRepository interface {
+	Upsert(entity.UserSolveProblemDifficultySumList) error
 }

@@ -1,43 +1,35 @@
 package commands
 
 import (
-	"diff-problems/interfaces/api"
 	"diff-problems/interfaces/database"
 	"diff-problems/usecase"
 )
 
-type UpdateRankingCommand struct {
-	Interactor usecase.RankingInteractor
+type UserSolveProblemDifficultySumCommand struct {
+	Interactor usecase.UserSolveProblemDifficultySumInteractor
 }
 
-func NewUpdateRankingCommand(
+func NewUserSolveProblemDifficultySumCommand(
 	sqlHandler database.SqlHandler,
-	requestHandler api.RequestHandler,
-) *UpdateRankingCommand {
-	return &UpdateRankingCommand{
-		Interactor: usecase.RankingInteractor{
-			UserFirstAcSubmissionRepository: &database.UserFirstAcSubmissionRepository{
-				SqlHandler: sqlHandler,
-			},
+) *UserSolveProblemDifficultySumCommand {
+	return &UserSolveProblemDifficultySumCommand{
+		Interactor: usecase.UserSolveProblemDifficultySumInteractor{
 			UserFirstAcSubmissionUpdatedAtRepository: &database.UserFirstAcSubmissionUpdatedAtRepository{
 				SqlHandler: sqlHandler,
 			},
-			ProblemDifficultyRepository: &database.ProblemDifficultyRepository{
+			CalcUserSolveProblemDifficultySumService: &database.CalcUserSolveProblemDifficultySumService{
 				SqlHandler: sqlHandler,
 			},
-			/*
-				RankingRepository: &database.RankingRepository{
-					SqlHandler: sqlHandler,
-				},
-				RankingUpdatedAtRepository: &database.RankingUpdatedAtRepository{
-					SqlHandler: sqlHandler,
-				},*
-
-			*/
+			UserSolveProblemDifficultySumRepository: &database.UserSolveProblemDifficultySumRepository{
+				SqlHandler: sqlHandler,
+			},
+			UserSolveProblemDifficultySumUpdatedAtRepository: &database.UserSolveProblemDifficultySumUpdatedAtRepository{
+				SqlHandler: sqlHandler,
+			},
 		},
 	}
 }
 
-func (command *UpdateRankingCommand) Update() (err error) {
+func (command *UserSolveProblemDifficultySumCommand) Update() (err error) {
 	return command.Interactor.Update()
 }

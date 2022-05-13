@@ -49,6 +49,7 @@ var updateAllUserFirstAcSubmissionCmd = &cobra.Command{
 	},
 }
 
+/*
 var updateRankingCmd = &cobra.Command{
 	Use:   "update-ranking",
 	Short: "ランキング上方をupdate",
@@ -67,6 +68,7 @@ var updateRankingCmd = &cobra.Command{
 		return
 	},
 }
+*/
 
 var startApiCmd = &cobra.Command{
 	Use:   "api",
