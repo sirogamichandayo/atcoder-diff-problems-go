@@ -13,7 +13,7 @@ func (repo *UserFirstAcSubmissionRepository) BulkUpsert(u entity.AcUserSubmissio
 	placeholders, values := u.MakeValueForUpsertMySql()
 
 	// on duplicate key updateのときはfirst_solved_atが小さくなるような更新だけをする
-	// TODO: これドメイン知識にしたい
+	// TODO: first_solved_epoch_timeあたりをアプリケーションで制御するようにしたい
 	query := fmt.Sprintf(
 		`
 INSERT INTO user_first_ac_submissions (user_id, problem_id, first_solved_epoch_time)

@@ -1,9 +1,10 @@
 package usecase
 
 import (
+	client "diff-problems/domain/client/mock"
 	"diff-problems/domain/entity"
+	repository "diff-problems/domain/repository/mock"
 	"diff-problems/domain/vo"
-	mockUsecase "diff-problems/usecase/mock"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -14,11 +15,11 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	defer ctrl.Finish()
 
 	userFirstAcSubmissionRepositoryMock :=
-		mockUsecase.NewMockUserFirstAcSubmissionRepository(ctrl)
+		repository.NewMockUserFirstAcSubmissionRepository(ctrl)
 	UserFirstAcSubmissionUpdatedAtRepositoryMock :=
-		mockUsecase.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
+		repository.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
 	UserSubmissionAtCoderProblemClientMock :=
-		mockUsecase.NewMockUserSubmissionClient(ctrl)
+		client.NewMockUserSubmissionClient(ctrl)
 
 	userId1 := "user_id1"
 	problemId1 := "problem_id1"
@@ -76,11 +77,11 @@ func Test_UpdateFromUpdatedAt_正常系(t *testing.T) {
 	defer ctrl.Finish()
 
 	userFirstAcSubmissionRepositoryMock :=
-		mockUsecase.NewMockUserFirstAcSubmissionRepository(ctrl)
+		repository.NewMockUserFirstAcSubmissionRepository(ctrl)
 	UserFirstAcSubmissionUpdatedAtRepositoryMock :=
-		mockUsecase.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
+		repository.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
 	UserSubmissionAtCoderProblemClientMock :=
-		mockUsecase.NewMockUserSubmissionClient(ctrl)
+		client.NewMockUserSubmissionClient(ctrl)
 
 	updatedTime := int64(5000)
 	userId1 := "user_id1"

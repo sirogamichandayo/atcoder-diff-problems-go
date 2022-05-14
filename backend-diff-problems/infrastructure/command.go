@@ -49,6 +49,24 @@ var updateAllUserFirstAcSubmissionCmd = &cobra.Command{
 	},
 }
 
+var updateDifficultySumCmd = &cobra.Command{
+	Use:   "update-difficulty-sum",
+	Short: "ランキング情報をupdate",
+	Long:  "すでにクロール済みの情報からランキングを更新します",
+	RunE: func(cmd *cobra.Command, args []string) (err error) {
+		config, err := conf.LoadConfig()
+		if err != nil {
+			return
+		}
+
+		command := commands.NewUserSolveProblemDifficultySumCommand(
+			NewSqlHandler(config.SinDb),
+		)
+		err = command.Update()
+		return
+	},
+}
+
 var startApiCmd = &cobra.Command{
 	Use:   "api",
 	Short: "apiを起動",
@@ -82,6 +100,7 @@ func Execute() {
 	rootCmd.AddCommand(updateProblemDifficultiesCmd)
 	rootCmd.AddCommand(updateAllUserFirstAcSubmissionCmd)
 	rootCmd.AddCommand(updateUserFirstAcSubmissionCmd)
+	rootCmd.AddCommand(updateDifficultySumCmd)
 	rootCmd.AddCommand(startApiCmd)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)

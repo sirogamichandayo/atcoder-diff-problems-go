@@ -1,8 +1,8 @@
 package commands
 
 import (
+	api "diff-problems/interfaces/api/mock"
 	"diff-problems/interfaces/commands"
-	mockApi "diff-problems/interfaces/commands_test/mock"
 	"diff-problems/test_tool"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
@@ -16,8 +16,8 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	requestHandlerMock := mockApi.NewMockRequestHandler(ctrl)
-	responseMock := mockApi.NewMockResponse(ctrl)
+	requestHandlerMock := api.NewMockRequestHandler(ctrl)
+	responseMock := api.NewMockResponse(ctrl)
 
 	gomock.InOrder(
 		requestHandlerMock.
