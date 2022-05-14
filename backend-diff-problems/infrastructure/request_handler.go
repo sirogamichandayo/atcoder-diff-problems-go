@@ -21,7 +21,7 @@ func (handler *RequestHandler) Get(url string, headers map[string]string) (api.R
 	if err != nil {
 		return nil, err
 	}
-
+	req.Close = true
 	req.Header.Set("Accept-Encoding", "gzip")
 	for key, value := range headers {
 		req.Header.Set(key, value)
@@ -32,19 +32,9 @@ func (handler *RequestHandler) Get(url string, headers map[string]string) (api.R
 		return nil, err
 	}
 
-	return Response{res}, err
-}
+	defer res.Body.Close()
 
-type Response struct {
-	Response *http.Response
-}
-
-func (res Response) IsSuccess() bool {
-	return 200 <= res.Response.StatusCode && res.Response.StatusCode < 300
-}
-
-func (res Response) BodyBytes() ([]byte, error) {
-	reader, err := gzip.NewReader(res.Response.Body)
+	reader, err := gzip.NewReader(res.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -53,6 +43,19 @@ func (res Response) BodyBytes() ([]byte, error) {
 	if _, err := output.ReadFrom(reader); err != nil {
 		return nil, err
 	}
+	return Response{res.StatusCode, output.Bytes()}, err
+}
 
-	return output.Bytes(), nil
+type Response struct {
+	statusCode int
+	bodyBytes  []byte
+}
+
+func (res Response) IsSuccess() bool {
+	return 200 <= res.statusCode && res.statusCode < 300
+}
+
+func (res Response) BodyBytes() ([]byte, error) {
+	// TODO: 返り値変更
+	return res.bodyBytes, nil
 }

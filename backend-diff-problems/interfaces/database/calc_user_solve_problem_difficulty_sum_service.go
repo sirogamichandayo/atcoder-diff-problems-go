@@ -1,6 +1,8 @@
 package database
 
-import "diff-problems/domain/entity"
+import (
+	"diff-problems/domain/entity"
+)
 
 // CalcUserSolveProblemDifficultySumService はSQLでユーザーが解いた問題のdiffを計算するstructです
 type CalcUserSolveProblemDifficultySumService struct {
@@ -11,10 +13,10 @@ func (repo CalcUserSolveProblemDifficultySumService) Calc() (entity.UserSolvePro
 	// NOTE: アプリケーションコードでは計算時間がかかりすぎるのでSQLで書いた
 	query := `
 SELECT user_id, SUM(IFNULL(clip_difficulty, 0)) as clip_diff_sum 
-FROM 'user_first_ac_submissions''
-JOIN 'problem_difficulties'
-USING ('problem_id')
-GROUP BY 'user_id'
+FROM user_first_ac_submissions
+JOIN problem_difficulties
+USING (problem_id)
+GROUP BY user_id;
 `
 	rows, err := repo.Query(query)
 	if err != nil {
