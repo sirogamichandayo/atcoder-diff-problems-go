@@ -15,7 +15,10 @@ func Test_MakeValueForUpsertMySql(t *testing.T) {
 		{userId2, diffSum2},
 	}
 
-	placeholder, values := list.MakeValueForUpsertMySql()
+	placeholderValueList, err := list.MakeValuesForUpsertMySql()
+	assert.Nil(t, err)
+	placeholderValue := placeholderValueList[0]
+	placeholder, values := placeholderValue.Placeholder(), placeholderValue.Values()
 
 	assert.Equal(
 		t,
