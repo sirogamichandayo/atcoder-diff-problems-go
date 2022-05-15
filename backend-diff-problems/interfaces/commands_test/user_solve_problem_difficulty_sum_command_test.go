@@ -3,8 +3,9 @@ package commands
 import (
 	"diff-problems/interfaces/commands"
 	"diff-problems/test_tool"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Update_正常系(t *testing.T) {
@@ -42,21 +43,24 @@ VALUES (?,?,?),(?,?,?)
 
 	var userId string
 	var difficultySum float64
+	var rank uint64
 	rows, err := handler.Query("SELECT * from user_solve_problem_difficulty_sum ORDER BY user_id ASC")
 	assert.Nil(t, err)
 	defer rows.Close()
 
 	assert.True(t, rows.Next())
-	err = rows.Scan(&userId, &difficultySum)
+	err = rows.Scan(&userId, &difficultySum, &rank)
 	assert.Nil(t, err)
 	assert.Equal(t, userId1, userId)
 	assert.Equal(t, difficultySum, problem1ClipDifficulty+problem2ClipDifficulty)
+	assert.Equal(t, uint64(1), rank)
 
 	assert.True(t, rows.Next())
-	err = rows.Scan(&userId, &difficultySum)
+	err = rows.Scan(&userId, &difficultySum, &rank)
 	assert.Nil(t, err)
 	assert.Equal(t, userId2, userId)
 	assert.Equal(t, difficultySum, problem1ClipDifficulty)
+	assert.Equal(t, uint64(2), rank)
 
 	assert.False(t, rows.Next())
 

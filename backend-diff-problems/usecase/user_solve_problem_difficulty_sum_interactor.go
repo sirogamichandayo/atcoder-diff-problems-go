@@ -3,7 +3,6 @@ package usecase
 import (
 	"diff-problems/domain/repository"
 	"diff-problems/domain/repository/service"
-	"fmt"
 )
 
 type UserSolveProblemDifficultySumInteractor struct {
@@ -24,13 +23,11 @@ func (interactor UserSolveProblemDifficultySumInteractor) Update() error {
 		return err
 	}
 
-	fmt.Println("1")
 	err = interactor.UserSolveProblemDifficultySumRepository.Upsert(diffSumList)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("2")
 	return interactor.UserSolveProblemDifficultySumUpdatedAtRepository.Update(
 		submissionUpdatedAt,
 	)
