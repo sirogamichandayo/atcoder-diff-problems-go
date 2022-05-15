@@ -1,22 +1,32 @@
 package usecase
 
-import "diff-problems/domain/entity"
+import (
+	"diff-problems/domain/entity"
+	"diff-problems/domain/repository"
+)
 
 type UserInteractor struct {
-	UserRepository UserRepository
+	UserSolveProblemDifficultySumRepository          repository.UserSolveProblemDifficultySumRepository
+	UserSolveProblemDifficultySumUpdatedAtRepository repository.UserSolveProblemDifficultySumUpdatedAtRepository
 }
 
-func (interactor *UserInteractor) Add(u entity.User) (err error) {
-	_, err = interactor.UserRepository.Store(u)
-	return
-}
+func (interactor *UserInteractor) DiffRankById(userId string) (entity.UserSolveProblemDifficultySumAndRankAndUpdatedEpochTime, error) {
+	userSum, err := interactor.UserSolveProblemDifficultySumRepository.FindById(userId)
+	if err != nil {
+		return entity.UserSolveProblemDifficultySumAndRankAndUpdatedEpochTime{}, err
+	}
+	diffSumList, err := interactor.UserSolveProblemDifficultySumRepository.All(userId)
+	if err != nil {
+		return entity.UserSolveProblemDifficultySumAndRankAndUpdatedEpochTime{}, err
+	}
+	updatedEpochTime, err := interactor.UserSolveProblemDifficultySumUpdatedAtRepository.Get()
+	if err != nil {
+		return entity.UserSolveProblemDifficultySumAndRankAndUpdatedEpochTime{}, err
+	}
+	rank := userSum.CalcRank(diffSumList)
 
-func (interactor *UserInteractor) Users() (user entity.Users, err error) {
-	user, err = interactor.UserRepository.FindAll()
-	return
-}
+	sumAndRank := entity.UserSolveProblemDifficultySumAndRank{Rank: rank, UserDifficultySum: userSum}
+	sumAndRankAndEpochTime := entity.UserSolveProblemDifficultySumAndRankAndUpdatedEpochTime{UserSumAndRank: sumAndRank, UpdatedEpochTime: updatedEpochTime}
 
-func (interactor *UserInteractor) UserById(identifier uint64) (user entity.User, err error) {
-	user, err = interactor.UserRepository.FindById(identifier)
-	return
+	return sumAndRankAndEpochTime, nil
 }

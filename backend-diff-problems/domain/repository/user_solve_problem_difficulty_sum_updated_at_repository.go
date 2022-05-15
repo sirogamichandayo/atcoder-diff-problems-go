@@ -3,4 +3,5 @@ package repository
 
 type UserSolveProblemDifficultySumUpdatedAtRepository interface {
 	Update(int64) error
+	Get() (int64, error)
 }

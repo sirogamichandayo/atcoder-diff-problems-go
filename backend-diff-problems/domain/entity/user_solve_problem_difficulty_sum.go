@@ -12,6 +12,11 @@ type UserSolveProblemDifficultySum struct {
 
 type UserSolveProblemDifficultySumList []UserSolveProblemDifficultySum
 
+func (ds UserSolveProblemDifficultySum) CalcRank(diffSumList UserSolveProblemDifficultySumList) uint64 {
+
+	return 10
+}
+
 const UserSolveProblemDifficultySumListPluckLen = 500
 
 func (list UserSolveProblemDifficultySumList) MakeValuesForUpsertMySql() (vo.PlaceholderValueList, error) {
