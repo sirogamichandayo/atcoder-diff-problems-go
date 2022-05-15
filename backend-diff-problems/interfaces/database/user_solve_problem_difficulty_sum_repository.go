@@ -17,7 +17,7 @@ func (u UserSolveProblemDifficultySumRepository) Upsert(list entity.UserSolvePro
 
 	for _, placeholderValue := range placeholderValueList {
 		query := fmt.Sprintf(`
-INSERT INTO user_solve_problem_difficulty_sum (user_id, clip_difficulty_sum)
+INSERT INTO user_solve_problem_difficulty_sum (user_id, clip_difficulty_sum, rnk)
 VALUES %s
 ON DUPLICATE KEY UPDATE
   user_id = VALUES(user_id)

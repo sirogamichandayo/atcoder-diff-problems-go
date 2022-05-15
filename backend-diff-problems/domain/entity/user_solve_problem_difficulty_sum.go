@@ -8,16 +8,12 @@ import (
 type UserSolveProblemDifficultySum struct {
 	UserId            string
 	ClipDifficultySum float64
+	Rank              uint64
 }
 
 type UserSolveProblemDifficultySumList []UserSolveProblemDifficultySum
 
-func (ds UserSolveProblemDifficultySum) CalcRank(diffSumList UserSolveProblemDifficultySumList) uint64 {
-
-	return 10
-}
-
-const UserSolveProblemDifficultySumListPluckLen = 500
+const UserSolveProblemDifficultySumListPluckLen = 333
 
 func (list UserSolveProblemDifficultySumList) MakeValuesForUpsertMySql() (vo.PlaceholderValueList, error) {
 	lLen := len(list)
@@ -34,12 +30,12 @@ func (list UserSolveProblemDifficultySumList) MakeValuesForUpsertMySql() (vo.Pla
 		listSize := end - begin
 		placeholders := make([]string, 0, listSize)
 		for i := 0; i < listSize; i++ {
-			placeholders = append(placeholders, "(?,?)")
+			placeholders = append(placeholders, "(?,?,?)")
 		}
 
-		values := make([]interface{}, 0, listSize*2)
+		values := make([]interface{}, 0, listSize*3)
 		for _, entity := range list[begin:end] {
-			values = append(values, entity.UserId, entity.ClipDifficultySum)
+			values = append(values, entity.UserId, entity.ClipDifficultySum, entity.Rank)
 		}
 
 		pv, err := vo.NewPlaceHolderValue(strings.Join(placeholders, ","), values)
