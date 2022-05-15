@@ -25,7 +25,7 @@ func Test_MakeValueForUpsertMySql(t *testing.T) {
 
 	assert.Equal(
 		t,
-		"(?,?,?),(?,?,?),(?,?,?)",
+		"(?,?,?),(?,?,?)",
 		placeholder,
 		[]interface{}{userId1, diffSum1, rnk1, userId2, diffSum2, rnk2},
 	)
