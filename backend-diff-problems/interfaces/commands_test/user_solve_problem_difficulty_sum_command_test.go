@@ -53,14 +53,14 @@ VALUES (?,?,?),(?,?,?)
 	assert.Nil(t, err)
 	assert.Equal(t, userId1, userId)
 	assert.Equal(t, difficultySum, problem1ClipDifficulty+problem2ClipDifficulty)
-	assert.Same(t, uint64(1), rank)
+	assert.Equal(t, uint64(1), rank)
 
 	assert.True(t, rows.Next())
 	err = rows.Scan(&userId, &difficultySum, &rank)
 	assert.Nil(t, err)
 	assert.Equal(t, userId2, userId)
 	assert.Equal(t, difficultySum, problem1ClipDifficulty)
-	assert.Same(t, uint64(2), rank)
+	assert.Equal(t, uint64(2), rank)
 
 	assert.False(t, rows.Next())
 
