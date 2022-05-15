@@ -4,6 +4,19 @@ type UserSolveProblemDifficultySumUpdatedAtRepository struct {
 	SqlHandler
 }
 
+func (repo UserSolveProblemDifficultySumUpdatedAtRepository) Get() (int64, error) {
+	var et int64
+	row, err := repo.Query("SELECT updated_epoch_time FROM user_solve_problem_difficulty_sum_updated_at")
+	defer row.Close()
+	if err != nil {
+		return et, err
+	}
+
+	row.Next()
+	err = row.Scan(&et)
+	return et, err
+}
+
 func (repo UserSolveProblemDifficultySumUpdatedAtRepository) Update(epochTime int64) error {
 	return repo.Transaction(func(handler TransactionHandler) error {
 		if _, err := handler.Execute(

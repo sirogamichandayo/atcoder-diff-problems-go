@@ -34,6 +34,36 @@ func (m *MockUserSolveProblemDifficultySumRepository) EXPECT() *MockUserSolvePro
 	return m.recorder
 }
 
+// All mocks base method.
+func (m *MockUserSolveProblemDifficultySumRepository) All() (entity.UserSolveProblemDifficultySumList, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "All")
+	ret0, _ := ret[0].(entity.UserSolveProblemDifficultySumList)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// All indicates an expected call of All.
+func (mr *MockUserSolveProblemDifficultySumRepositoryMockRecorder) All() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "All", reflect.TypeOf((*MockUserSolveProblemDifficultySumRepository)(nil).All))
+}
+
+// FindById mocks base method.
+func (m *MockUserSolveProblemDifficultySumRepository) FindById(arg0 string) (entity.UserSolveProblemDifficultySum, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FindById", arg0)
+	ret0, _ := ret[0].(entity.UserSolveProblemDifficultySum)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FindById indicates an expected call of FindById.
+func (mr *MockUserSolveProblemDifficultySumRepositoryMockRecorder) FindById(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindById", reflect.TypeOf((*MockUserSolveProblemDifficultySumRepository)(nil).FindById), arg0)
+}
+
 // Upsert mocks base method.
 func (m *MockUserSolveProblemDifficultySumRepository) Upsert(arg0 entity.UserSolveProblemDifficultySumList) error {
 	m.ctrl.T.Helper()

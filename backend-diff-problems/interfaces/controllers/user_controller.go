@@ -18,16 +18,19 @@ func NewUserController(sqlHandler database.SqlHandler) *UserController {
 			UserSolveProblemDifficultySumRepository: &database.UserSolveProblemDifficultySumRepository{
 				SqlHandler: sqlHandler,
 			},
+			UserSolveProblemDifficultySumUpdatedAtRepository: &database.UserSolveProblemDifficultySumUpdatedAtRepository{
+				SqlHandler: sqlHandler,
+			},
 		},
 	}
 }
 
 func (controller *UserController) ShowDiff(c Context) {
 	userId := c.Param("user_id")
-	user, err := controller.Interactor.DiffRankById(userId)
+	entity, err := controller.Interactor.DiffRankById(userId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, entity)
 }
