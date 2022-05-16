@@ -28,6 +28,7 @@ func (client *UserSubmissionClient) FetchSinceByEpochTime(fromEpochTime int64) (
 	if err != nil {
 		return
 	}
+	fmt.Println(string(bytes))
 
 	list, err = entity.MakeUserSubmissionListFromJsonBytes(bytes)
 	return
