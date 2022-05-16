@@ -72,7 +72,7 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	assert.Nil(t, err)
 
 	rows, err := sqlHandler.Query(
-		`select * from user_first_ac_submissions order by user_id, problem_id`,
+		`select * from user_first_ac_submissions order by user_id, problem_id;`,
 	)
 	defer rows.Close()
 	assert.Nil(t, err)
