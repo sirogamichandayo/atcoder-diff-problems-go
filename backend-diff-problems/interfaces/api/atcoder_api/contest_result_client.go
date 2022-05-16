@@ -20,5 +20,5 @@ func (client ContestResultClient) FetchList(userId string) (vo.ContestResultList
 		return nil, err
 	}
 
-	return converter.ConvertContentResultList(res.BodyBytes())
+	return converter.ConvertContestResultList(res.BodyBytes())
 }

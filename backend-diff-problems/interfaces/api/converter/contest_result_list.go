@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func ConvertContentResultList(jsonBytes []byte) (vo.ContestResultList, error) {
+func ConvertContestResultList(jsonBytes []byte) (vo.ContestResultList, error) {
 	var rawList []map[string]interface{}
 	err := json.Unmarshal(jsonBytes, &rawList)
 	if err != nil {

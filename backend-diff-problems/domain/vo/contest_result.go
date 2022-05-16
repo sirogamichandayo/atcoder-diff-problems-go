@@ -25,3 +25,14 @@ func (list ContestResultList) Last() (ContestResult, error) {
 	}
 	return res, nil
 }
+
+func (list ContestResultList) ExactByRated() ContestResultList {
+	res := make(ContestResultList, 0)
+
+	for _, entity := range list {
+		if entity.IsRated {
+			res = append(res, entity)
+		}
+	}
+	return res
+}
