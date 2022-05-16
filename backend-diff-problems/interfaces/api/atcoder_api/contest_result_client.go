@@ -13,7 +13,7 @@ type ContestResultClient struct {
 
 const ContestResultFormat = "https://atcoder.jp/users/%s/history/json"
 
-func (client ContestResultClient) FetchList(userId string) (vo.ContestResultList, error) {
+func (client ContestResultClient) All(userId string) (list vo.ContestResultList, err error) {
 	url := fmt.Sprintf(ContestResultFormat, userId)
 	res, err := client.Get(url, nil)
 	if err != nil {
