@@ -33,6 +33,21 @@ func (m *MockUserSolveProblemDifficultySumUpdatedAtRepository) EXPECT() *MockUse
 	return m.recorder
 }
 
+// Get mocks base method.
+func (m *MockUserSolveProblemDifficultySumUpdatedAtRepository) Get() (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Get")
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Get indicates an expected call of Get.
+func (mr *MockUserSolveProblemDifficultySumUpdatedAtRepositoryMockRecorder) Get() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockUserSolveProblemDifficultySumUpdatedAtRepository)(nil).Get))
+}
+
 // Update mocks base method.
 func (m *MockUserSolveProblemDifficultySumUpdatedAtRepository) Update(arg0 int64) error {
 	m.ctrl.T.Helper()

@@ -4,13 +4,15 @@ import (
 	"diff-problems/domain/entity"
 	repository "diff-problems/domain/repository/mock"
 	service "diff-problems/domain/repository/service/mock"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func Test_Update_正常系(t *testing.T) {
 	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
 	userFirstAcSubmissionUpdatedAtRepositoryMock := repository.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
 	calcUserSolveProblemDifficultySumServiceMock := service.NewMockCalcUserSolveProblemDifficultySumService(ctrl)

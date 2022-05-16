@@ -3,21 +3,26 @@ package infrastructure
 import (
 	conf "diff-problems/config"
 	"diff-problems/interfaces/controllers"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-var Router *gin.Engine
+var gRouter *gin.Engine
 
-func RouterInitialize() {
+func RouterInitialize() *gin.Engine {
+	if gRouter != nil {
+		return gRouter
+	}
+
 	config, err := conf.LoadConfig()
 	if err != nil {
 		panic(err)
 	}
 
-	router := gin.Default()
-	setApiV1Router(router.Group("api/v1"), config)
-	Router = router
+	gRouter = gin.Default()
+	setApiV1Router(gRouter.Group("api/v1"), config)
+	return gRouter
 }
 
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
@@ -28,7 +33,5 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 		AllowHeaders: []string{"Content-Type"},
 	}))
 
-	v1.POST("/users", func(c *gin.Context) { userController.Create(c) })
-	v1.GET("/users", func(c *gin.Context) { userController.Index(c) })
-	v1.GET("/users/:id", func(c *gin.Context) { userController.Show(c) })
+	v1.GET("/users/:user_id/diff-sum", func(c *gin.Context) { userController.ShowDiff(c) })
 }

@@ -21,6 +21,7 @@ func TruncateTestTables() (database.SqlHandler, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var tableName string

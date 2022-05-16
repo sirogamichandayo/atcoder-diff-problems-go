@@ -5,4 +5,6 @@ import "diff-problems/domain/entity"
 
 type UserSolveProblemDifficultySumRepository interface {
 	Upsert(entity.UserSolveProblemDifficultySumList) error
+	FindById(string) (entity.UserSolveProblemDifficultySum, error)
+	All() (entity.UserSolveProblemDifficultySumList, error)
 }
