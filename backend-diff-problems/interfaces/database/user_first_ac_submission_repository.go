@@ -27,5 +27,14 @@ ON DUPLICATE KEY UPDATE
 		placeholders)
 	_, err = repo.Execute(query, values...)
 
+	rows1, err := repo.Query(
+		`select count(*) from user_first_ac_submissions order by user_id, problem_id;`,
+	)
+	defer rows1.Close()
+	rows1.Next()
+	var d int
+	rows1.Scan(&d)
+	fmt.Println("count: ", d)
+
 	return
 }
