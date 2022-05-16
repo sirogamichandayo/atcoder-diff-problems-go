@@ -12,7 +12,8 @@ type UserSolveProblemDifficultySumRepository struct {
 func (u UserSolveProblemDifficultySumRepository) FindById(s string) (entity.UserSolveProblemDifficultySum, error) {
 	var sEntity entity.UserSolveProblemDifficultySum
 
-	row, err := u.Query("SELECT user_id, clip_difficulty_sum, rnk FROM user_solve_problem_difficulty_sum WHERE user_id = ? LIMIT 1", s)
+	fmt.Println(s)
+	row, err := u.Query("SELECT user_id, clip_difficulty_sum, rnk FROM user_solve_problem_difficulty_sum WHERE user_id = 'aaa' LIMIT 1;")
 	if err != nil {
 		return sEntity, err
 	}

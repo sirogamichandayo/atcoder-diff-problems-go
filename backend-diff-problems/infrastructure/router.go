@@ -8,17 +8,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var Router *gin.Engine
+var gRouter *gin.Engine
 
-func RouterInitialize() {
+func RouterInitialize() *gin.Engine {
+	if gRouter != nil {
+		return gRouter
+	}
+
 	config, err := conf.LoadConfig()
 	if err != nil {
 		panic(err)
 	}
 
-	router := gin.Default()
-	setApiV1Router(router.Group("api/v1"), config)
-	Router = router
+	gRouter = gin.Default()
+	setApiV1Router(gRouter.Group("api/v1"), config)
+	return gRouter
 }
 
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {

@@ -3,8 +3,9 @@ package infrastructure
 import (
 	conf "diff-problems/config"
 	"diff-problems/interfaces/commands"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
@@ -72,8 +73,7 @@ var startApiCmd = &cobra.Command{
 	Short: "apiを起動",
 	Long:  "atcoder diff problemsのapiを起動します",
 	RunE: func(cmd *cobra.Command, args []string) (err error) {
-		RouterInitialize()
-		return Router.Run()
+		return RouterInitialize().Run()
 	},
 }
 
