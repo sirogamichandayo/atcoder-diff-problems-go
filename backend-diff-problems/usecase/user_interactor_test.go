@@ -12,6 +12,7 @@ import (
 
 func Test_正常系_DiffRankById(t *testing.T) {
 	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
 	sumRepositoryMock := repository.NewMockUserSolveProblemDifficultySumRepository(ctrl)
 	sumUpdatedAtRepositoryMock := repository.NewMockUserFirstAcSubmissionUpdatedAtRepository(ctrl)
