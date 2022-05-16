@@ -26,4 +26,5 @@ func Test_ShowDiff_正常系(t *testing.T) {
 	controller.ShowDiff(c)
 
 	assert.Equal(t, `{"UserSum":{"UserId":"aaa","ClipDifficultySum":1000,"Rank":123},"RankUpdatedEpochTime":12345}`, w.Body.String())
+
 }
