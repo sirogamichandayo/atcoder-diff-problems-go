@@ -7,10 +7,10 @@ type UserSolveProblemDifficultySumUpdatedAtRepository struct {
 func (repo UserSolveProblemDifficultySumUpdatedAtRepository) Get() (int64, error) {
 	var et int64
 	row, err := repo.Query("SELECT updated_epoch_time FROM user_solve_problem_difficulty_sum_updated_at")
-	defer row.Close()
 	if err != nil {
 		return et, err
 	}
+	defer row.Close()
 
 	row.Next()
 	err = row.Scan(&et)
