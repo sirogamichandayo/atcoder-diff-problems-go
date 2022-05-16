@@ -4,7 +4,6 @@ import (
 	api "diff-problems/interfaces/api/mock"
 	"diff-problems/interfaces/commands"
 	"diff-problems/test_tool"
-	"fmt"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -71,15 +70,6 @@ func Test_UpdateAll_正常系(t *testing.T) {
 	command := commands.NewUpdateUserFirstAcSubmissionCommand(sqlHandler, requestHandlerMock)
 	err = command.UpdateAll()
 	assert.Nil(t, err)
-
-	rows1, err := sqlHandler.Query(
-		`select count(*) from user_first_ac_submissions order by user_id, problem_id;`,
-	)
-	defer rows1.Close()
-	rows1.Next()
-	var d int
-	rows1.Scan(&d)
-	fmt.Println("count: ", d)
 
 	rows, err := sqlHandler.Query(
 		`select * from user_first_ac_submissions order by user_id, problem_id;`,
