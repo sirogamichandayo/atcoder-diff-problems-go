@@ -17,4 +17,5 @@ func Test_Index正常系(t *testing.T) {
 
 	assert.Equal(t, `[{"Id":1,"FirstName":"sirogami","LastName":"kurogami"}]`, response.Body.String())
 }
+
 */
