@@ -6,7 +6,6 @@ import {Ec2Stack} from "./stack/ec2-stack";
 import {SecretsManagerStack} from "./stack/secrets-manager-stack";
 import {RdsStack} from "./stack/rds-stack";
 import {StorageStack} from "./stack/storage-stack";
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class CdkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {

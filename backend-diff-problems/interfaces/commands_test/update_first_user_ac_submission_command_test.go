@@ -45,7 +45,7 @@ func Test_UpdateAll_正常系(t *testing.T) {
 {"epoch_second":222222222,"problem_id":"problem3","user_id":"test_user3","result":"AC"},
 {"epoch_second":333333333,"problem_id":"problem3","user_id":"test_user3","result":"AC"}
 ]`,
-			), nil).
+			)).
 			Times(1),
 		requestHandlerMock.
 			EXPECT().
@@ -63,7 +63,7 @@ func Test_UpdateAll_正常系(t *testing.T) {
 		responseMock.
 			EXPECT().
 			BodyBytes().
-			Return([]byte(`[]`), nil).
+			Return([]byte(`[]`)).
 			Times(1),
 	)
 

@@ -14,10 +14,7 @@ func (client *ProblemDifficultyClient) Fetch() (list entity.ProblemDifficultyLis
 	if err != nil {
 		return
 	}
-	bytes, err := res.BodyBytes()
-	if err != nil {
-		return
-	}
+	bytes := res.BodyBytes()
 
 	list, err = entity.MakeProblemDifficultyListFromJsonBytes(bytes)
 	return

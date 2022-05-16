@@ -5,9 +5,10 @@ import (
 	"diff-problems/interfaces/commands"
 	"diff-problems/interfaces/database"
 	"diff-problems/test_tool"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func Test_正常系(t *testing.T) {
@@ -31,7 +32,7 @@ func Test_正常系(t *testing.T) {
 
 	responseMock.
 		EXPECT().BodyBytes().
-		Return([]byte(`{"abc138_a": {"difficulty": -849}, "abc138_b": {}}`), nil).
+		Return([]byte(`{"abc138_a": {"difficulty": -849}, "abc138_b": {}}`)).
 		Times(1)
 
 	command := commands.NewUpdateProblemDifficultyCommand(sqlHandler, requestHandlerMock)

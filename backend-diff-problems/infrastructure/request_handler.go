@@ -55,7 +55,6 @@ func (res Response) IsSuccess() bool {
 	return 200 <= res.statusCode && res.statusCode < 300
 }
 
-func (res Response) BodyBytes() ([]byte, error) {
-	// TODO: 返り値変更
-	return res.bodyBytes, nil
+func (res Response) BodyBytes() []byte {
+	return res.bodyBytes
 }

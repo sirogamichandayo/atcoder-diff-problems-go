@@ -17,14 +17,14 @@ func (client *UserSubmissionClient) FetchSinceByEpochTime(fromEpochTime int64) (
 		return
 	}
 	if !res.IsSuccess() {
-		bytes, err := res.BodyBytes()
+		bytes := res.BodyBytes()
 		if err != nil {
 			return nil, fmt.Errorf("リクエスト失敗しました。エラーメッセージの生成にも失敗しました")
 		}
 		return nil, fmt.Errorf(string(bytes))
 	}
 
-	bytes, err := res.BodyBytes()
+	bytes := res.BodyBytes()
 	if err != nil {
 		return
 	}

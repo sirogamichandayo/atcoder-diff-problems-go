@@ -73,12 +73,11 @@ func (m *MockResponse) EXPECT() *MockResponseMockRecorder {
 }
 
 // BodyBytes mocks base method.
-func (m *MockResponse) BodyBytes() ([]byte, error) {
+func (m *MockResponse) BodyBytes() []byte {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BodyBytes")
 	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	return ret0
 }
 
 // BodyBytes indicates an expected call of BodyBytes.
