@@ -7,16 +7,16 @@ import (
 	"net/http"
 )
 
-type RequestHandler struct {
+type GzipRequestHandler struct {
 }
 
-func NewRequestHandler() api.RequestHandler {
-	clientHandler := new(RequestHandler)
+func NewGzipRequestHandler() api.RequestHandler {
+	clientHandler := new(GzipRequestHandler)
 
 	return clientHandler
 }
 
-func (handler *RequestHandler) Get(url string, headers map[string]string) (api.Response, error) {
+func (handler *GzipRequestHandler) Get(url string, headers map[string]string) (api.Response, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err

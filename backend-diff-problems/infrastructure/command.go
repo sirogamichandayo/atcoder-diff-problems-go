@@ -24,7 +24,7 @@ var updateProblemDifficultiesCmd = &cobra.Command{
 
 		command := commands.NewUpdateProblemDifficultyCommand(
 			NewSqlHandler(config.SinDb),
-			NewRequestHandler(),
+			NewGzipRequestHandler(),
 		)
 		err = command.Exec()
 		return
@@ -43,7 +43,7 @@ var updateAllUserFirstAcSubmissionCmd = &cobra.Command{
 
 		command := commands.NewUpdateUserFirstAcSubmissionCommand(
 			NewSqlHandler(config.SinDb),
-			NewRequestHandler(),
+			NewGzipRequestHandler(),
 		)
 		err = command.UpdateAll()
 		return
@@ -89,7 +89,7 @@ var updateUserFirstAcSubmissionCmd = &cobra.Command{
 
 		command := commands.NewUpdateUserFirstAcSubmissionCommand(
 			NewSqlHandler(config.SinDb),
-			NewRequestHandler(),
+			NewGzipRequestHandler(),
 		)
 		err = command.UpdateFromUpdatedAt()
 		return
