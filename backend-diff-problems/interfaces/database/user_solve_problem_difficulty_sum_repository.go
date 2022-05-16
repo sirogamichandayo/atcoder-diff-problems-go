@@ -12,12 +12,11 @@ type UserSolveProblemDifficultySumRepository struct {
 func (u UserSolveProblemDifficultySumRepository) FindById(s string) (entity.UserSolveProblemDifficultySum, error) {
 	var sEntity entity.UserSolveProblemDifficultySum
 
-	fmt.Println(s)
 	row, err := u.Query("SELECT user_id, clip_difficulty_sum, rnk FROM user_solve_problem_difficulty_sum WHERE user_id = 'aaa' LIMIT 1;")
+	defer row.Close()
 	if err != nil {
 		return sEntity, err
 	}
-	defer row.Close()
 
 	if !row.Next() {
 		return sEntity, fmt.Errorf("not found user_id = %s", s)
