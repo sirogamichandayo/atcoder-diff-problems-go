@@ -3,9 +3,9 @@ package vo
 import "fmt"
 
 type ContestResult struct {
-	IsRated   bool
-	NewRating int
-	EndTime   int64
+	IsRated bool
+	Rating  Rating
+	EndTime int64
 }
 
 type ContestResultList []ContestResult
@@ -35,4 +35,8 @@ func (list ContestResultList) ExactByRated() ContestResultList {
 		}
 	}
 	return res
+}
+
+func (list ContestResultList) Empty() bool {
+	return len(list) == 0
 }

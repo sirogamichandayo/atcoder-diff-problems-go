@@ -12,12 +12,17 @@ func Test_ConvertContestResultList_正常系(t *testing.T) {
 	actual, err := ConvertContestResultList(bytes)
 	assert.Nil(t, err)
 
+	rating1, _ := vo.NewRating(1255)
+	rating2, _ := vo.NewRating(2155)
+	rating3, _ := vo.NewRating(2676)
+	rating4, _ := vo.NewRating(2728)
+	rating5, _ := vo.NewRating(2733)
 	expected := vo.ContestResultList{
-		{true, 1255, 1473601200},
-		{true, 2155, 1480858800},
-		{true, 2676, 1486216200},
-		{true, 2728, 1494079800},
-		{true, 2733, 1495893000},
+		{true, rating1, 1473601200},
+		{true, rating2, 1480858800},
+		{true, rating3, 1486216200},
+		{true, rating4, 1494079800},
+		{true, rating5, 1495893000},
 	}
 
 	assert.Equal(t, expected, actual)
