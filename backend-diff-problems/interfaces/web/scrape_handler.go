@@ -2,11 +2,17 @@
 package web
 
 type ScrapeHandler interface {
-	NewDocument(url string) Document
+	NewDocument(url string) (Document, error)
 }
 
 type Document interface {
-	Find(selector string) Document
+	Find(selector string) Selection
+	Text() string
+	Attr(string) (string, bool)
+}
+
+type Selection interface {
+	Find(selector string) Selection
 	Text() string
 	Attr(string) (string, bool)
 }

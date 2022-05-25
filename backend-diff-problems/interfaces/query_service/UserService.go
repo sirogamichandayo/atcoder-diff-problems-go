@@ -1,4 +1,4 @@
-package query_service
+package queryService
 
 import (
 	"diff-problems/domain/vo"
@@ -16,7 +16,10 @@ type UserService struct {
 func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 
 	url := fmt.Sprintf("https://atcoder.jp/users/%s", userId)
-	userDocument := s.NewDocument(url)
+	userDocument, err := s.NewDocument(url)
+	if err != nil {
+		return cqrsDto.User{}, err
+	}
 	imageUrl, exist := userDocument.
 		Find("#main-container > div.row > div.col-md-3.col-sm-12 > img:nth-child(2)").
 		Attr("src")
