@@ -23,13 +23,9 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 		Find("#main-container > div.row > div.col-md-3.col-sm-12 > img:nth-child(2)").
 		Attr("src")
 	if !exist {
-		imageUrl, exist = userDocument.
+		imageUrl, _ = userDocument.
 			Find("#main-container > div.row > div.col-md-3.col-sm-12 > img").
 			Attr("src")
-
-		if !exist {
-			// TODO: logを残す
-		}
 	}
 
 	rating := vo.NewNoRating()
