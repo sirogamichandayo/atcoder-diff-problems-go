@@ -25,8 +25,7 @@ func RouterInitialize() *gin.Engine {
 }
 
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
-	userController := controllers.NewUserController(NewSqlHandler(config.SinDb), NewRequestHandler())
-	userRateController := controllers.NewUserRateController(NewGzipRequestHandler())
+	userController := controllers.NewUserController(NewScrapeHandler(), NewRequestHandler())
 	v1.Use(cors.New(cors.Config{
 		AllowOrigins: []string{config.ApiV1.AllowOrigin},
 		AllowMethods: []string{"GET"},
@@ -34,7 +33,4 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	}))
 
 	v1.GET("/users/:user_id", func(c *gin.Context) { userController.Show(c) })
-	v1.GET("/users/:user_id/diff-sum", func(c *gin.Context) { userController.ShowDiff(c) })
-	v1.GET("/users/:user_id/rate/latest", func(c *gin.Context) { userRateController.ShowLatest(c) })
-	v1.GET("/users/:user_id/rate/history", func(c *gin.Context) { userRateController.Index(c) })
 }

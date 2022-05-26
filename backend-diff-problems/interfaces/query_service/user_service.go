@@ -1,8 +1,8 @@
 package queryService
 
 import (
+	"diff-problems/domain/client"
 	"diff-problems/domain/vo"
-	"diff-problems/interfaces/api/atcoder_api"
 	"diff-problems/interfaces/web"
 	cqrsDto "diff-problems/usecase/cqrs_dto"
 	"fmt"
@@ -10,11 +10,10 @@ import (
 
 type UserService struct {
 	web.ScrapeHandler
-	ContestResultClient atcoder_api.ContestResultClient
+	ContestResultClient client.ContestResultClient
 }
 
 func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
-
 	url := fmt.Sprintf("https://atcoder.jp/users/%s", userId)
 	userDocument, err := s.NewDocument(url)
 	if err != nil {
