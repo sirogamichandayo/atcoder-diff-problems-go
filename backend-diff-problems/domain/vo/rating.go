@@ -19,6 +19,14 @@ func NewRating(rating int) (Rating, error) {
 	return Rating{rating, ratingToColor(rating)}, nil
 }
 
+func (r Rating) Rating() int {
+	return r.rating
+}
+
+func (r Rating) Color() Color {
+	return r.color
+}
+
 func ratingToColor(rating int) Color {
 	tmp := rating / 400
 	if tmp == 0 {

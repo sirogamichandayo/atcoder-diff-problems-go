@@ -40,6 +40,7 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 		}
 		rating = lastResult.Rating
 	}
-
-	return cqrsDto.NewUser(userId, imageUrl, rating), nil
+	ranking := 10
+	panic("implement")
+	return cqrsDto.NewUser(userId, imageUrl, ranking, rating), nil
 }

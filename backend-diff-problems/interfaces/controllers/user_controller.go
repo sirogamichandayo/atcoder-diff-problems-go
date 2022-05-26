@@ -32,5 +32,11 @@ func (controller *UserController) Show(c Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, entity)
+	c.JSON(http.StatusOK, gin.H{
+		"userId":   entity.UserId(),
+		"imageUrl": entity.ImageUrl(),
+		"ranking":  entity.Ranking(),
+		"rating":   entity.Rating().Rating(),
+		"color":    entity.Rating().Color(),
+	})
 }
