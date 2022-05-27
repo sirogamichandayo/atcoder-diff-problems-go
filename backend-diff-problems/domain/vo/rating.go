@@ -8,16 +8,20 @@ type Rating struct {
 }
 
 func NewNoRating() Rating {
-
 	return Rating{color: Black}
 }
 
 func NewRating(rating int) (Rating, error) {
 	if rating < 0 {
-		return Rating{}, fmt.Errorf("rating must be greater 0")
+		return Rating{}, fmt.Errorf("rating must be greater than or equal to zero")
 	}
 
-	return Rating{&rating, ratingToColor(rating)}, nil
+	color, err := ratingToColor(rating)
+	if err != nil {
+		return Rating{}, err
+	}
+
+	return Rating{&rating, color}, nil
 }
 
 func (r Rating) Rating() *int {
@@ -28,23 +32,30 @@ func (r Rating) Color() Color {
 	return r.color
 }
 
-func ratingToColor(rating int) Color {
+func ratingToColor(rating int) (Color, error) {
+	if rating < 0 {
+		return Black, fmt.Errorf("rating must be greater than or equal to zero")
+	}
 	tmp := rating / 400
 	if tmp == 0 {
-		return Gray
+		return Gray, nil
 	} else if tmp == 1 {
-		return Brown
+		return Brown, nil
 	} else if tmp == 2 {
-		return Green
+		return Green, nil
 	} else if tmp == 3 {
-		return Cyan
+		return Cyan, nil
 	} else if tmp == 4 {
-		return Blue
+		return Blue, nil
 	} else if tmp == 5 {
-		return Yellow
+		return Yellow, nil
 	} else if tmp == 6 {
-		return Orange
+		return Orange, nil
+	} else if tmp == 7 {
+		return Red, nil
+	} else if tmp == 8 {
+		return Silver, nil
 	} else {
-		return Red
+		return Gold, nil
 	}
 }

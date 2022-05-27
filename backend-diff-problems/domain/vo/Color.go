@@ -12,4 +12,6 @@ const (
 	Yellow Color = "Yellow"
 	Orange Color = "Orange"
 	Red    Color = "Red"
+	Silver Color = "Silver"
+	Gold   Color = "Gold"
 )
