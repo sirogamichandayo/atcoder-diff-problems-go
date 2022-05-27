@@ -1,6 +1,9 @@
 package vo
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type ContestResult struct {
 	IsRated bool
@@ -16,7 +19,7 @@ func (list ContestResultList) Last() (ContestResult, error) {
 	}
 
 	var res ContestResult
-	LastEndTime := int64(0)
+	LastEndTime := int64(math.MinInt64)
 	for _, entity := range list {
 		if LastEndTime < entity.EndTime {
 			LastEndTime = entity.EndTime
