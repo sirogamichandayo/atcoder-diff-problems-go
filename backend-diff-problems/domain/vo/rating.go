@@ -3,12 +3,13 @@ package vo
 import "fmt"
 
 type Rating struct {
-	rating int
+	rating *int
 	color  Color
 }
 
 func NewNoRating() Rating {
-	return Rating{0, Black}
+
+	return Rating{color: Black}
 }
 
 func NewRating(rating int) (Rating, error) {
@@ -16,10 +17,10 @@ func NewRating(rating int) (Rating, error) {
 		return Rating{}, fmt.Errorf("rating must be greater 0")
 	}
 
-	return Rating{rating, ratingToColor(rating)}, nil
+	return Rating{&rating, ratingToColor(rating)}, nil
 }
 
-func (r Rating) Rating() int {
+func (r Rating) Rating() *int {
 	return r.rating
 }
 

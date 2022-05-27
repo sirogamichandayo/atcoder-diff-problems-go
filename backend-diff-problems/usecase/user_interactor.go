@@ -10,5 +10,5 @@ type UserInteractor struct {
 }
 
 func (interactor UserInteractor) FindByUserId(userId string) (cqrsDto.User, error) {
-	return interactor.FindByUserId(userId)
+	return interactor.UserService.FindByUserId(userId)
 }

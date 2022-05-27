@@ -6,6 +6,7 @@ import (
 	"diff-problems/interfaces/web"
 	cqrsDto "diff-problems/usecase/cqrs_dto"
 	"fmt"
+	"strconv"
 )
 
 type UserService struct {
@@ -19,10 +20,12 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 	if err != nil {
 		return cqrsDto.User{}, err
 	}
+	// 優勝経験あるユーザーのselector
 	imageUrl, exist := userDocument.
 		Find("#main-container > div.row > div.col-md-3.col-sm-12 > img:nth-child(2)").
 		Attr("src")
 	if !exist {
+		// 優勝経験ないユーザーのselector
 		imageUrl, _ = userDocument.
 			Find("#main-container > div.row > div.col-md-3.col-sm-12 > img").
 			Attr("src")
@@ -40,7 +43,12 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 		}
 		rating = lastResult.Rating
 	}
-	ranking := 10
-	panic("implement")
+
+	var ranking *int
+	rankingStr := userDocument.Find("#main-container > div.row > div.col-md-9.col-sm-12 > table > tbody > tr:nth-child(1) > td").Text()
+	if len(rankingStr) > 2 {
+		t, _ := strconv.Atoi(rankingStr[0 : len(rankingStr)-2])
+		ranking = &t
+	}
 	return cqrsDto.NewUser(userId, imageUrl, ranking, rating), nil
 }
