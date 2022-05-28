@@ -31,6 +31,13 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 			Attr("src")
 	}
 
+	var ranking *int
+	rankingStr := userDocument.Find("#main-container > div.row > div.col-md-9.col-sm-12 > table > tbody > tr:nth-child(1) > td").Text()
+	if len(rankingStr) > 2 {
+		t, _ := strconv.Atoi(rankingStr[0 : len(rankingStr)-2])
+		ranking = &t
+	}
+
 	rating := vo.NewNoRating()
 	resultList, err := s.ContestResultClient.All(userId)
 	if err != nil {
@@ -44,11 +51,5 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 		rating = lastResult.Rating
 	}
 
-	var ranking *int
-	rankingStr := userDocument.Find("#main-container > div.row > div.col-md-9.col-sm-12 > table > tbody > tr:nth-child(1) > td").Text()
-	if len(rankingStr) > 2 {
-		t, _ := strconv.Atoi(rankingStr[0 : len(rankingStr)-2])
-		ranking = &t
-	}
 	return cqrsDto.NewUser(userId, imageUrl, ranking, rating), nil
 }
