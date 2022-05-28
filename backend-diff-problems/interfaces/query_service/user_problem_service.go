@@ -5,7 +5,6 @@ import (
 	"diff-problems/domain/vo"
 	"diff-problems/interfaces/database"
 	cqrsDto "diff-problems/usecase/cqrs_dto"
-	"fmt"
 )
 
 type UserProblemService struct {
@@ -14,18 +13,15 @@ type UserProblemService struct {
 
 func (s UserProblemService) FindByUserId(userId string) (cqrsDto.UserProblem, error) {
 	solvedProblemIdList, err := s.getSolvedProblemIdList(userId)
-	fmt.Println(1)
 	if err != nil {
 		return cqrsDto.UserProblem{}, err
 	}
 
-	fmt.Println(1)
 	allProblemIdList, err := s.getAllProblemIdList()
 	if err != nil {
 		return cqrsDto.UserProblem{}, err
 	}
 
-	fmt.Println(1)
 	updatedEpochTime, err := s.getUpdatedEpochTime()
 	if err != nil {
 		return cqrsDto.UserProblem{}, err

@@ -7,6 +7,7 @@ import (
 	"diff-problems/usecase"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 type UserProblemController struct {
@@ -85,6 +86,6 @@ func (controller UserProblemController) Show(c Context) {
 			},
 		},
 		"userSolveClipDifficultyTotal": entity.SolvedProblemList().ClipDifficultyTotal(),
-		"updatedEpochTime":             entity.UpdatedEpochTime(),
+		"updatedEpochTime":             strconv.FormatInt(entity.UpdatedEpochTime(), 10),
 	})
 }
