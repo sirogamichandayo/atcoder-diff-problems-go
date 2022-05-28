@@ -33,4 +33,5 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	}))
 
 	v1.GET("/users/:user_id", func(c *gin.Context) { userController.Show(c) })
+	v1.GET("/users/:user_id/problems", func(c *gin.Context) { userController.Show(c) })
 }
