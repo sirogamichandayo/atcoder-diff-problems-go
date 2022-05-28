@@ -4,11 +4,11 @@ import "fmt"
 
 type Rating struct {
 	rating *int
-	color  Color
+	color  RatingColor
 }
 
 func NewNoRating() Rating {
-	return Rating{color: Black}
+	return Rating{color: BlackRating}
 }
 
 func NewRating(rating int) (Rating, error) {
@@ -28,34 +28,34 @@ func (r Rating) Rating() *int {
 	return r.rating
 }
 
-func (r Rating) Color() Color {
+func (r Rating) Color() RatingColor {
 	return r.color
 }
 
-func ratingToColor(rating int) (Color, error) {
+func ratingToColor(rating int) (RatingColor, error) {
 	if rating < 0 {
-		return Black, fmt.Errorf("rating must be greater than or equal to zero")
+		return BlackRating, fmt.Errorf("rating must be greater than or equal to zero")
 	}
 	tmp := rating / 400
 	if tmp == 0 {
-		return Gray, nil
+		return GrayRating, nil
 	} else if tmp == 1 {
-		return Brown, nil
+		return BrownRating, nil
 	} else if tmp == 2 {
-		return Green, nil
+		return GreenRating, nil
 	} else if tmp == 3 {
-		return Cyan, nil
+		return CyanRating, nil
 	} else if tmp == 4 {
-		return Blue, nil
+		return BlueRating, nil
 	} else if tmp == 5 {
-		return Yellow, nil
+		return YellowRating, nil
 	} else if tmp == 6 {
-		return Orange, nil
+		return OrangeRating, nil
 	} else if tmp == 7 {
-		return Red, nil
+		return RedRating, nil
 	} else if tmp == 8 {
-		return Silver, nil
+		return SilverRating, nil
 	} else {
-		return Gold, nil
+		return GoldRating, nil
 	}
 }
