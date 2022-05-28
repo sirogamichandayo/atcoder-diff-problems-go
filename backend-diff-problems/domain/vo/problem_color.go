@@ -16,3 +16,7 @@ const (
 	SilverProblem ProblemColor = "Silver"
 	GoldProblem   ProblemColor = "Gold"
 )
+
+func (pc ProblemColor) Equal(color ProblemColor) bool {
+	return pc == color
+}

@@ -26,6 +26,13 @@ func NewRawDifficulty(value any, valid bool) (RawDifficulty, error) {
 	return RawDifficulty{difficulty, true}, nil
 }
 
+func ReconstructRawDifficulty(d *float64) RawDifficulty {
+	if d == nil {
+		return RawDifficulty{0, false}
+	}
+	return RawDifficulty{*d, true}
+}
+
 func (rd RawDifficulty) MakeClipDifficulty() ClipDifficulty {
 	if !rd.Valid {
 		return ClipDifficulty{}

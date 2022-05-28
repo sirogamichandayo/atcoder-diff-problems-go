@@ -26,6 +26,16 @@ func (list ProblemDifficultyList) ClipDifficultyTotal() float64 {
 	return total
 }
 
+func (list ProblemDifficultyList) CountByColor(color vo.ProblemColor) int {
+	cnt := 0
+	for _, entity := range list {
+		if entity.ClipDifficulty.EqualColor(color) {
+			cnt++
+		}
+	}
+	return cnt
+}
+
 func (list ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
 	listSize := len(list)
 	placeholders := make([]string, 0, listSize)

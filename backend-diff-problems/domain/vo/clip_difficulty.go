@@ -7,11 +7,22 @@ type ClipDifficulty struct {
 	Valid      bool
 }
 
+func ReconstructClipDifficulty(d *float64) ClipDifficulty {
+	if d == nil {
+		return ClipDifficulty{0, false}
+	}
+	return ClipDifficulty{*d, true}
+}
+
 func (cd ClipDifficulty) Value() (driver.Value, error) {
 	if !cd.Valid {
 		return nil, nil
 	}
 	return cd.Difficulty, nil
+}
+
+func (cd ClipDifficulty) EqualColor(color ProblemColor) bool {
+	return cd.Color().Equal(color)
 }
 
 func (cd ClipDifficulty) Color() ProblemColor {
