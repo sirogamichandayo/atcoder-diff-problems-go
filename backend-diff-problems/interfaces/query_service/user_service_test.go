@@ -52,11 +52,6 @@ func Test_FindByUserId_正常系_優勝経験あるユーザー(t *testing.T) {
 			Attr("src").
 			Return(imgUrl, true).
 			Times(1),
-		contestResultClientMock.
-			EXPECT().
-			All(userId).
-			Return(resultList, nil).
-			Times(1),
 		documentMock.
 			EXPECT().
 			Find("#main-container > div.row > div.col-md-9.col-sm-12 > table > tbody > tr:nth-child(1) > td").
@@ -65,6 +60,11 @@ func Test_FindByUserId_正常系_優勝経験あるユーザー(t *testing.T) {
 			EXPECT().
 			Text().
 			Return(rankingStr).
+			Times(1),
+		contestResultClientMock.
+			EXPECT().
+			All(userId).
+			Return(resultList, nil).
 			Times(1),
 	)
 
@@ -131,11 +131,6 @@ func Test_FindByUserId_正常系_優勝経験ないユーザー(t *testing.T) {
 			Attr("src").
 			Return(imgUrl, true).
 			Times(1),
-		contestResultClientMock.
-			EXPECT().
-			All(userId).
-			Return(resultList, nil).
-			Times(1),
 		documentMock.
 			EXPECT().
 			Find("#main-container > div.row > div.col-md-9.col-sm-12 > table > tbody > tr:nth-child(1) > td").
@@ -144,6 +139,11 @@ func Test_FindByUserId_正常系_優勝経験ないユーザー(t *testing.T) {
 			EXPECT().
 			Text().
 			Return(rankingStr).
+			Times(1),
+		contestResultClientMock.
+			EXPECT().
+			All(userId).
+			Return(resultList, nil).
 			Times(1),
 	)
 
