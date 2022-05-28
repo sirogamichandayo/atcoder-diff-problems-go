@@ -1,11 +1,14 @@
 package vo
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type ContestResult struct {
-	IsRated   bool
-	NewRating int
-	EndTime   int64
+	IsRated bool
+	Rating  Rating
+	EndTime int64
 }
 
 type ContestResultList []ContestResult
@@ -16,7 +19,7 @@ func (list ContestResultList) Last() (ContestResult, error) {
 	}
 
 	var res ContestResult
-	LastEndTime := int64(0)
+	LastEndTime := int64(math.MinInt64)
 	for _, entity := range list {
 		if LastEndTime < entity.EndTime {
 			LastEndTime = entity.EndTime
@@ -35,4 +38,8 @@ func (list ContestResultList) ExactByRated() ContestResultList {
 		}
 	}
 	return res
+}
+
+func (list ContestResultList) Empty() bool {
+	return len(list) == 0
 }

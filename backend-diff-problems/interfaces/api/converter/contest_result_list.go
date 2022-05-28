@@ -34,7 +34,11 @@ func ConvertContestResultList(jsonBytes []byte) (vo.ContestResultList, error) {
 			return nil, err
 		}
 
-		list = append(list, vo.ContestResult{IsRated: isRated, NewRating: newRating, EndTime: endTime})
+		rating, err := vo.NewRating(newRating)
+		if err != nil {
+			return nil, err
+		}
+		list = append(list, vo.ContestResult{IsRated: isRated, Rating: rating, EndTime: endTime})
 	}
 
 	return list, nil

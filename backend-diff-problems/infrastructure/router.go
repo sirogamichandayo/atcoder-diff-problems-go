@@ -3,7 +3,6 @@ package infrastructure
 import (
 	conf "diff-problems/config"
 	"diff-problems/interfaces/controllers"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -26,16 +25,12 @@ func RouterInitialize() *gin.Engine {
 }
 
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
-	userController := controllers.NewUserController(NewSqlHandler(config.SinDb))
-	userRateController := controllers.NewUserRateController(NewGzipRequestHandler())
+	userController := controllers.NewUserController(NewScrapeHandler(), NewRequestHandler())
 	v1.Use(cors.New(cors.Config{
 		AllowOrigins: []string{config.ApiV1.AllowOrigin},
-		AllowMethods: []string{"POST", "GET"},
+		AllowMethods: []string{"GET"},
 		AllowHeaders: []string{"Content-Type"},
 	}))
 
-	v1.GET("/users/:user_id/diff-sum", func(c *gin.Context) { userController.ShowDiff(c) })
-	v1.GET("/users/:user_id/rate/latest", func(c *gin.Context) { userRateController.ShowLatest(c) })
-	v1.GET("/users/:user_id/rate/history", func(c *gin.Context) { userRateController.Index(c) })
-
+	v1.GET("/users/:user_id", func(c *gin.Context) { userController.Show(c) })
 }

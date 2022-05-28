@@ -3,6 +3,6 @@ package client
 
 import "diff-problems/domain/vo"
 
-type ContestRequestClient interface {
+type ContestResultClient interface {
 	All(string) (list vo.ContestResultList, err error)
 }

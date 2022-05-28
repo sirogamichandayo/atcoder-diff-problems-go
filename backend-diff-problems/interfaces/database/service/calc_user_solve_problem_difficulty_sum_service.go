@@ -1,12 +1,13 @@
-package database
+package service
 
 import (
 	"diff-problems/domain/entity"
+	"diff-problems/interfaces/database"
 )
 
 // CalcUserSolveProblemDifficultySumService はSQLでユーザーが解いた問題のdiffを計算するstructです
 type CalcUserSolveProblemDifficultySumService struct {
-	SqlHandler
+	database.SqlHandler
 }
 
 func (repo CalcUserSolveProblemDifficultySumService) Calc() (entity.UserSolveProblemDifficultySumList, error) {

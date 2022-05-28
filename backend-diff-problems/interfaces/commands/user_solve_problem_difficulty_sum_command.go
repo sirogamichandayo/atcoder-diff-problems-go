@@ -2,6 +2,7 @@ package commands
 
 import (
 	"diff-problems/interfaces/database"
+	"diff-problems/interfaces/database/service"
 	"diff-problems/usecase"
 )
 
@@ -17,7 +18,7 @@ func NewUserSolveProblemDifficultySumCommand(
 			UserFirstAcSubmissionUpdatedAtRepository: &database.UserFirstAcSubmissionUpdatedAtRepository{
 				SqlHandler: sqlHandler,
 			},
-			CalcUserSolveProblemDifficultySumService: &database.CalcUserSolveProblemDifficultySumService{
+			CalcUserSolveProblemDifficultySumService: &service.CalcUserSolveProblemDifficultySumService{
 				SqlHandler: sqlHandler,
 			},
 			UserSolveProblemDifficultySumRepository: &database.UserSolveProblemDifficultySumRepository{
