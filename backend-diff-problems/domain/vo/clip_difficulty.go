@@ -13,3 +13,33 @@ func (cd ClipDifficulty) Value() (driver.Value, error) {
 	}
 	return cd.Difficulty, nil
 }
+
+func (cd ClipDifficulty) Color() ProblemColor {
+	if !cd.Valid {
+		return BlackProblem
+	}
+	tmp := int64(cd.Difficulty) / 400
+	if tmp == 0 {
+		return GrayProblem
+	} else if tmp == 1 {
+		return BrownProblem
+	} else if tmp == 2 {
+		return GreenProblem
+	} else if tmp == 3 {
+		return CyanProblem
+	} else if tmp == 4 {
+		return BlueProblem
+	} else if tmp == 5 {
+		return YellowProblem
+	} else if tmp == 6 {
+		return OrangeProblem
+	} else if tmp == 7 {
+		return RedProblem
+	} else if tmp == 8 {
+		return BronzeProblem
+	} else if tmp == 9 {
+		return SilverProblem
+	} else {
+		return GoldProblem
+	}
+}

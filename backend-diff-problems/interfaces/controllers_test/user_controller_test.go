@@ -80,7 +80,7 @@ func Test_Show_正常系(t *testing.T) {
 "rating":%d,
 "color":"%s"
 }
-`, userId, imageUrl, ranking, lastRating, vo.Cyan)
+`, userId, imageUrl, ranking, lastRating, vo.CyanRating)
 
 	assert.JSONEq(t, expected, w.Body.String())
 }

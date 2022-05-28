@@ -14,6 +14,18 @@ type ProblemDifficulty struct {
 
 type ProblemDifficultyList []ProblemDifficulty
 
+func (list ProblemDifficultyList) ClipDifficultyTotal() float64 {
+	total := float64(0)
+	for _, entity := range list {
+		cd := entity.ClipDifficulty
+		if !cd.Valid {
+			continue
+		}
+		total += cd.Difficulty
+	}
+	return total
+}
+
 func (list ProblemDifficultyList) MakeValueForUpsertMySql() (string, []interface{}) {
 	listSize := len(list)
 	placeholders := make([]string, 0, listSize)
