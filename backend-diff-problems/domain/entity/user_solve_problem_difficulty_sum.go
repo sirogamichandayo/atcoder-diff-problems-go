@@ -2,6 +2,7 @@ package entity
 
 import (
 	"diff-problems/domain/vo"
+	"fmt"
 	"strings"
 )
 
@@ -46,4 +47,47 @@ func (list UserSolveProblemDifficultySumList) MakeValuesForUpsertMySql() (vo.Pla
 	}
 
 	return res, nil
+}
+
+type SortedUserSolveProblemDifficultySumList struct {
+	list UserSolveProblemDifficultySumList
+}
+
+func NewSortedUserSolveProblemDifficultySumList(list UserSolveProblemDifficultySumList) (*SortedUserSolveProblemDifficultySumList, error) {
+	rnk := uint64(0)
+	for _, entity := range list {
+		if rnk > entity.Rank {
+			return nil, fmt.Errorf("not sorted")
+		}
+	}
+	return &SortedUserSolveProblemDifficultySumList{list}, nil
+}
+
+func (list SortedUserSolveProblemDifficultySumList) List() UserSolveProblemDifficultySumList {
+	return list.list
+}
+
+func (list SortedUserSolveProblemDifficultySumList) Near(userId string, nearCnt int) (*SortedUserSolveProblemDifficultySumList, error) {
+	userInd := -1
+	for ind, entity := range list.list {
+		if entity.UserId == userId {
+			userInd = ind
+		}
+	}
+	if userInd == -1 {
+		return nil, fmt.Errorf("not found userId %s", userId)
+	}
+
+	begin := userInd - nearCnt
+	if begin < 0 {
+		begin = 0
+	}
+	end := userInd + nearCnt + 1
+	if end > len(list.list) {
+		end = len(list.list)
+	}
+
+	return &SortedUserSolveProblemDifficultySumList{
+		list.list[begin:end],
+	}, nil
 }

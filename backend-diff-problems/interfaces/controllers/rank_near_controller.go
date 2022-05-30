@@ -2,10 +2,13 @@ package controllers
 
 import (
 	"diff-problems/usecase"
+	"github.com/gin-gonic/gin"
+	"net/http"
+	"strconv"
 )
 
 type RankNearController struct {
-	Interactor usecase.UserInteractor
+	Interactor usecase.RankInteractor
 }
 
 func NewRankNearController() *RankNearController {
@@ -13,25 +16,25 @@ func NewRankNearController() *RankNearController {
 }
 
 func (controller *RankNearController) Show(c Context) {
-	// 	userId := c.Param("user_id")
-	// count, err := strconv.Atoi(c.DefaultQuery("count", "5"))
-	/*
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
-			return
-		}
+	userId := c.Param("user_id")
+	count, err := strconv.Atoi(c.DefaultQuery("count", "5"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
+		return
+	}
 
-		entity, err := controller.Interactor.FindByUserId(userId)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"userId":   entity.UserId(),
-			"imageUrl": entity.ImageUrl(),
-			"ranking":  entity.Ranking(),
-			"rating":   entity.Rating().Rating(),
-			"color":    entity.Rating().Color(),
+	list, err := controller.Interactor.Near(userId, count)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
+		return
+	}
+	var res []gin.H
+	for _, entity := range list.List() {
+		res = append(res, gin.H{
+			"userId":            entity.UserId,
+			"clipDifficultySum": entity.ClipDifficultySum,
+			"rank":              entity.Rank,
 		})
-	*/
+	}
+	c.JSON(http.StatusOK, res)
 }

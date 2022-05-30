@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"diff-problems/domain/client"
+	"diff-problems/domain/entity"
 	"diff-problems/domain/repository"
 	"fmt"
 	"time"
@@ -52,9 +53,19 @@ func (interactor UserFirstAcSubmissionInteractor) fetchSubmissionAndUpdate(since
 	isLast bool,
 	err error,
 ) {
-	userSubmissionList, err := interactor.UserSubmissionAtCoderProblemClient.FetchSinceByEpochTime(sinceEpochTime)
-	if err != nil {
-		return
+	retryCount := 10
+	var userSubmissionList entity.UserSubmissionList
+	for true {
+		userSubmissionList, err = interactor.UserSubmissionAtCoderProblemClient.FetchSinceByEpochTime(sinceEpochTime)
+		if retryCount == 0 {
+			return
+		}
+		if err != nil {
+			fmt.Errorf(err.Error())
+			retryCount--
+		} else {
+			break
+		}
 	}
 
 	if userSubmissionList.IsEmpty() {
