@@ -4,5 +4,5 @@ package cqrsService
 import cqrsDto "diff-problems/usecase/cqrs_dto"
 
 type UserService interface {
-	FindByUserId(string) (cqrsDto.User, error)
+	FindByUserId(string) (cqrsDto.UserRate, error)
 }

@@ -35,10 +35,10 @@ func (m *MockUserService) EXPECT() *MockUserServiceMockRecorder {
 }
 
 // FindByUserId mocks base method.
-func (m *MockUserService) FindByUserId(arg0 string) (cqrsDto.User, error) {
+func (m *MockUserService) FindByUserId(arg0 string) (cqrsDto.UserRate, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindByUserId", arg0)
-	ret0, _ := ret[0].(cqrsDto.User)
+	ret0, _ := ret[0].(cqrsDto.UserRate)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
