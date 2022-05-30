@@ -12,7 +12,6 @@ type UserFirstAcSubmissionRepository struct {
 func (repo *UserFirstAcSubmissionRepository) BulkUpsert(u entity.AcUserSubmissionList) (err error) {
 	placeholders, values := u.MakeValueForUpsertMySql()
 
-	fmt.Println(values)
 	// on duplicate key updateのときはfirst_solved_atが小さくなるような更新だけをする
 	// TODO: first_solved_epoch_timeあたりをアプリケーションで制御するようにしたい
 	query := fmt.Sprintf(
