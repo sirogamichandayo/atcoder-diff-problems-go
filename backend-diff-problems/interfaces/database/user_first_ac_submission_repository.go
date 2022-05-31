@@ -19,8 +19,6 @@ func (repo *UserFirstAcSubmissionRepository) BulkUpsert(u entity.AcUserSubmissio
 INSERT INTO user_first_ac_submissions (user_id, problem_id, first_solved_epoch_time)
 VALUES %s
 ON DUPLICATE KEY UPDATE
-  user_id = VALUES(user_id),
-  problem_id = VALUES(problem_id),
   first_solved_epoch_time = LEAST(first_solved_epoch_time, VALUES(first_solved_epoch_time))  
 `,
 		placeholders)
