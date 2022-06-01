@@ -20,3 +20,7 @@ func (interactor RankInteractor) Near(
 
 	return sortedList.Near(userId, nearCnt)
 }
+
+func (interactor RankInteractor) Paging(offset, limit int) (*entity.SortedUserSolveProblemDifficultySumList, error) {
+	return interactor.UserSolveProblemDifficultySumRepository.SortedPaginate(offset, limit)
+}

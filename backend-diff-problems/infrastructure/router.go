@@ -29,6 +29,7 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	sqlHandler := NewSqlHandler(config.SinDb)
 	userProblemController := controllers.NewUserProblemController(NewSqlHandler(config.SinDb))
 	rankNearController := controllers.NewRankNearController(sqlHandler)
+	rankController := controllers.NewRankController(sqlHandler)
 	v1.Use(cors.New(cors.Config{
 		AllowOrigins: []string{config.ApiV1.AllowOrigin},
 		AllowMethods: []string{"GET"},
@@ -38,4 +39,5 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	v1.GET("/users/:user_id", func(c *gin.Context) { userController.Show(c) })
 	v1.GET("/users/:user_id/problems", func(c *gin.Context) { userProblemController.Show(c) })
 	v1.GET("/ranks/near/:user_id", func(c *gin.Context) { rankNearController.Show(c) })
+	v1.GET("/ranks/paging", func(c *gin.Context) { rankController.Show(c) })
 }
