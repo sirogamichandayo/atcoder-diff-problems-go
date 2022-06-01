@@ -30,7 +30,7 @@ VALUES
 	controller := controllers.NewRankNearController(handler)
 	controller.Show(c)
 
-	assert.Equal(t,
+	assert.JSONEq(t,
 		`[
 {"clipDifficultySum":1200,"rank":1,"userId":"test1"},
 {"clipDifficultySum":1100,"rank":2,"userId":"test2"},
