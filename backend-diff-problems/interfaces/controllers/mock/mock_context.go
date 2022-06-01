@@ -47,6 +47,20 @@ func (mr *MockContextMockRecorder) Bind(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Bind", reflect.TypeOf((*MockContext)(nil).Bind), arg0)
 }
 
+// DefaultQuery mocks base method.
+func (m *MockContext) DefaultQuery(arg0, arg1 string) string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DefaultQuery", arg0, arg1)
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// DefaultQuery indicates an expected call of DefaultQuery.
+func (mr *MockContextMockRecorder) DefaultQuery(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DefaultQuery", reflect.TypeOf((*MockContext)(nil).DefaultQuery), arg0, arg1)
+}
+
 // JSON mocks base method.
 func (m *MockContext) JSON(arg0 int, arg1 interface{}) {
 	m.ctrl.T.Helper()
