@@ -64,6 +64,21 @@ func (mr *MockUserSolveProblemDifficultySumRepositoryMockRecorder) SortedAll() *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SortedAll", reflect.TypeOf((*MockUserSolveProblemDifficultySumRepository)(nil).SortedAll))
 }
 
+// SortedPaginate mocks base method.
+func (m *MockUserSolveProblemDifficultySumRepository) SortedPaginate(arg0, arg1 int) (*entity.SortedUserSolveProblemDifficultySumList, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SortedPaginate", arg0, arg1)
+	ret0, _ := ret[0].(*entity.SortedUserSolveProblemDifficultySumList)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SortedPaginate indicates an expected call of SortedPaginate.
+func (mr *MockUserSolveProblemDifficultySumRepositoryMockRecorder) SortedPaginate(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SortedPaginate", reflect.TypeOf((*MockUserSolveProblemDifficultySumRepository)(nil).SortedPaginate), arg0, arg1)
+}
+
 // Upsert mocks base method.
 func (m *MockUserSolveProblemDifficultySumRepository) Upsert(arg0 entity.UserSolveProblemDifficultySumList) error {
 	m.ctrl.T.Helper()

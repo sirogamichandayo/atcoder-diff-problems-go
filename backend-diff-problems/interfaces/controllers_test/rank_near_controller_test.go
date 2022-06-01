@@ -24,7 +24,7 @@ VALUES
 
 	w := httptest.NewRecorder()
 	c, _ := gin.CreateTestContext(w)
-	c.Params = []gin.Param{{Key: "user_id", Value: "test1"}}
+	c.Params = gin.Params{{Key: "user_id", Value: "test1"}}
 	assert.Nil(t, err)
 
 	controller := controllers.NewRankNearController(handler)

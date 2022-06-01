@@ -7,4 +7,5 @@ type UserSolveProblemDifficultySumRepository interface {
 	Upsert(entity.UserSolveProblemDifficultySumList) error
 	FindById(string) (entity.UserSolveProblemDifficultySum, error)
 	SortedAll() (*entity.SortedUserSolveProblemDifficultySumList, error)
+	SortedPaginate(int, int) (*entity.SortedUserSolveProblemDifficultySumList, error)
 }

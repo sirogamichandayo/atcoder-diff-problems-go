@@ -26,7 +26,32 @@ func (u UserSolveProblemDifficultySumRepository) FindById(s string) (entity.User
 }
 
 func (u UserSolveProblemDifficultySumRepository) SortedAll() (*entity.SortedUserSolveProblemDifficultySumList, error) {
-	rows, err := u.Query("SELECT user_id, clip_difficulty_sum, rnk FROM user_solve_problem_difficulty_sum ORDER BY rnk asc;")
+	rows, err := u.Query(`
+SELECT user_id, clip_difficulty_sum, rnk 
+FROM user_solve_problem_difficulty_sum 
+ORDER BY rnk asc, user_id asc`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var sList entity.UserSolveProblemDifficultySumList
+	for rows.Next() {
+		var sum entity.UserSolveProblemDifficultySum
+		if err := rows.Scan(&sum.UserId, &sum.ClipDifficultySum, &sum.Rank); err != nil {
+			return nil, err
+		}
+		sList = append(sList, sum)
+	}
+	return entity.NewSortedUserSolveProblemDifficultySumList(sList)
+}
+
+func (u UserSolveProblemDifficultySumRepository) SortedPaginate(offset, limit int) (*entity.SortedUserSolveProblemDifficultySumList, error) {
+	rows, err := u.Query(`
+SELECT user_id, clip_difficulty_sum, rnk
+FROM user_solve_problem_difficulty_sum 
+ORDER BY rnk asc, user_id asc
+LIMIT ? OFFSET ?;`, limit, offset)
 	if err != nil {
 		return nil, err
 	}
