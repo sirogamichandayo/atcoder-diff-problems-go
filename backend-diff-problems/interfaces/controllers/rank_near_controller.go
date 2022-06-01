@@ -22,9 +22,11 @@ func NewRankNearController(sqlHandler database.SqlHandler) *RankNearController {
 	}
 }
 
+const DefaultCount = "5"
+
 func (controller *RankNearController) Show(c Context) {
 	userId := c.Param("user_id")
-	count, err := strconv.Atoi(c.DefaultQuery("count", "5"))
+	count, err := strconv.Atoi(c.DefaultQuery("count", DefaultCount))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
 		return
