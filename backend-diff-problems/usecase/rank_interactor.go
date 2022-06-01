@@ -6,14 +6,14 @@ import (
 )
 
 type RankInteractor struct {
-	userSolveProblemDifficultySumRepository repository.UserSolveProblemDifficultySumRepository
+	UserSolveProblemDifficultySumRepository repository.UserSolveProblemDifficultySumRepository
 }
 
 func (interactor RankInteractor) Near(
 	userId string,
 	nearCnt int,
 ) (*entity.SortedUserSolveProblemDifficultySumList, error) {
-	sortedList, err := interactor.userSolveProblemDifficultySumRepository.SortedAll()
+	sortedList, err := interactor.UserSolveProblemDifficultySumRepository.SortedAll()
 	if err != nil {
 		return nil, err
 	}

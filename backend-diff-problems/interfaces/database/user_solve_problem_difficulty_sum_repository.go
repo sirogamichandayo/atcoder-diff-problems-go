@@ -35,7 +35,7 @@ func (u UserSolveProblemDifficultySumRepository) SortedAll() (*entity.SortedUser
 	var sList entity.UserSolveProblemDifficultySumList
 	for rows.Next() {
 		var sum entity.UserSolveProblemDifficultySum
-		if err := rows.Scan(sum.UserId, sum.ClipDifficultySum, sum.Rank); err != nil {
+		if err := rows.Scan(&sum.UserId, &sum.ClipDifficultySum, &sum.Rank); err != nil {
 			return nil, err
 		}
 		sList = append(sList, sum)

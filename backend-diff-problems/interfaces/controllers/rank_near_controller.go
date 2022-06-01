@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"diff-problems/interfaces/database"
 	"diff-problems/usecase"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -11,8 +13,14 @@ type RankNearController struct {
 	Interactor usecase.RankInteractor
 }
 
-func NewRankNearController() *RankNearController {
-	return &RankNearController{}
+func NewRankNearController(sqlHandler database.SqlHandler) *RankNearController {
+	return &RankNearController{
+		Interactor: usecase.RankInteractor{
+			UserSolveProblemDifficultySumRepository: database.UserSolveProblemDifficultySumRepository{
+				SqlHandler: sqlHandler,
+			},
+		},
+	}
 }
 
 func (controller *RankNearController) Show(c Context) {

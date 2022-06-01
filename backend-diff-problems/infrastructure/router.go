@@ -26,8 +26,9 @@ func RouterInitialize() *gin.Engine {
 
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 	userController := controllers.NewUserController(NewScrapeHandler(), NewRequestHandler())
+	sqlHandler := NewSqlHandler(config.SinDb)
 	userProblemController := controllers.NewUserProblemController(NewSqlHandler(config.SinDb))
-	rankNearController := controllers.NewRankNearController()
+	rankNearController := controllers.NewRankNearController(sqlHandler)
 	v1.Use(cors.New(cors.Config{
 		AllowOrigins: []string{config.ApiV1.AllowOrigin},
 		AllowMethods: []string{"GET"},
