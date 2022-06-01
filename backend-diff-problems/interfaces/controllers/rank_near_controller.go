@@ -3,7 +3,6 @@ package controllers
 import (
 	"diff-problems/interfaces/database"
 	"diff-problems/usecase"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
