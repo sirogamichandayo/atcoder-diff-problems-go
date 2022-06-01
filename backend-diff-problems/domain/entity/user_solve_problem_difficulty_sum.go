@@ -87,7 +87,5 @@ func (list SortedUserSolveProblemDifficultySumList) Near(userId string, nearCnt 
 		end = len(list.list)
 	}
 
-	return &SortedUserSolveProblemDifficultySumList{
-		list.list[begin:end],
-	}, nil
+	return NewSortedUserSolveProblemDifficultySumList(list.list[begin:end])
 }
