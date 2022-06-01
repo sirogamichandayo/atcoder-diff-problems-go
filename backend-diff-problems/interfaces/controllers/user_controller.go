@@ -1,61 +1,42 @@
 package controllers
 
 import (
-	"diff-problems/domain"
-	"diff-problems/interfaces/database"
+	"diff-problems/interfaces/api"
+	"diff-problems/interfaces/api/atcoder_api"
+	"diff-problems/interfaces/query_service"
+	"diff-problems/interfaces/web"
 	"diff-problems/usecase"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 )
 
 type UserController struct {
 	Interactor usecase.UserInteractor
 }
 
-func NewUserController(sqlHandler database.SqlHandler) *UserController {
+func NewUserController(scrapeHandler web.ScrapeHandler, requestHandler api.RequestHandler) *UserController {
 	return &UserController{
 		Interactor: usecase.UserInteractor{
-			UserRepository: &database.UserRepository{
-				SqlHandler: sqlHandler,
+			UserService: queryService.UserService{
+				ScrapeHandler:       scrapeHandler,
+				ContestResultClient: atcoder_api.ContestResultClient{RequestHandler: requestHandler},
 			},
 		},
 	}
 }
 
-func (controller *UserController) Create(c Context) {
-	u := domain.User{}
-	if err := c.Bind(&u); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
-		return
-	}
-	err := controller.Interactor.Add(u)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
-		return
-	}
-	c.JSON(http.StatusCreated, nil)
-}
-
-func (controller *UserController) Index(c Context) {
-	users, err := controller.Interactor.Users()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, users)
-}
-
 func (controller *UserController) Show(c Context) {
-	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
-		return
-	}
-	user, err := controller.Interactor.UserById(id)
+	userId := c.Param("user_id")
+	entity, err := controller.Interactor.FindByUserId(userId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"msg": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, gin.H{
+		"userId":   entity.UserId(),
+		"imageUrl": entity.ImageUrl(),
+		"ranking":  entity.Ranking(),
+		"rating":   entity.Rating().Rating(),
+		"color":    entity.Rating().Color(),
+	})
 }

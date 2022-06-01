@@ -6,3 +6,9 @@ RUN apt-get update && apt-get install -y unzip
 RUN mkdir /go/src/app
 WORKDIR /go/src/app
 COPY ./ /go/src/app
+
+RUN go mod tidy
+RUN go get github.com/rubenv/sql-migrate/sql-migrate
+RUN go install -v github.com/rubenv/sql-migrate/sql-migrate
+RUN go get github.com/golang/mock/mockgen
+RUN go install github.com/golang/mock/mockgen@v1.6.0

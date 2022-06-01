@@ -5,34 +5,39 @@ import (
 	"diff-problems/interfaces/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"os"
 )
 
-var Router *gin.Engine
+var gRouter *gin.Engine
 
-func init() {
-	cDir, err := os.Getwd()
+func RouterInitialize() *gin.Engine {
+	if gRouter != nil {
+		return gRouter
+	}
+
+	config, err := conf.LoadConfig()
 	if err != nil {
 		panic(err)
 	}
-	config, err := conf.LoadConfig(cDir)
-	if err != nil {
-		panic(err)
-	}
 
-	router := gin.Default()
-	setApiV1Router(router.Group("api/v1"), config)
-	Router = router
+	gRouter = gin.Default()
+	setApiV1Router(gRouter.Group("api/v1"), config)
+	return gRouter
 }
 
 func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
-	userController := controllers.NewUserController(NewSqlHandler(config.SinDb))
+	userController := controllers.NewUserController(NewScrapeHandler(), NewRequestHandler())
+	sqlHandler := NewSqlHandler(config.SinDb)
+	userProblemController := controllers.NewUserProblemController(NewSqlHandler(config.SinDb))
+	rankNearController := controllers.NewRankNearController(sqlHandler)
+	rankController := controllers.NewRankController(sqlHandler)
 	v1.Use(cors.New(cors.Config{
-		AllowOrigins: config.ApiV1.AllowOrigins,
-		AllowMethods: []string{"POST", "GET"},
+		AllowOrigins: []string{config.ApiV1.AllowOrigin},
+		AllowMethods: []string{"GET"},
 		AllowHeaders: []string{"Content-Type"},
 	}))
-	v1.POST("/users", func(c *gin.Context) { userController.Create(c) })
-	v1.GET("/users", func(c *gin.Context) { userController.Index(c) })
-	v1.GET("/users/:id", func(c *gin.Context) { userController.Show(c) })
+
+	v1.GET("/users/:user_id", func(c *gin.Context) { userController.Show(c) })
+	v1.GET("/users/:user_id/problems", func(c *gin.Context) { userProblemController.Show(c) })
+	v1.GET("/ranks/near/:user_id", func(c *gin.Context) { rankNearController.Show(c) })
+	v1.GET("/ranks/paging", func(c *gin.Context) { rankController.Show(c) })
 }

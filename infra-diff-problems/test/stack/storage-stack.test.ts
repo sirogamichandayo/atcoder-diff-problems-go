@@ -26,7 +26,9 @@ test("Bucket", () => {
 test("OriginAccessIdentity", () => {
   template.resourceCountIs("AWS::CloudFront::CloudFrontOriginAccessIdentity", 1);
   template.hasResourceProperties("AWS::CloudFront::CloudFrontOriginAccessIdentity", {
-    Comment: "website-distribution-originAccessIdentity"
+    "CloudFrontOriginAccessIdentityConfig": {
+      "Comment": "website-distribution-originAccessIdentity"
+    }
   });
 });
 

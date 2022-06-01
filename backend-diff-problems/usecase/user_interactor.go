@@ -1,22 +1,14 @@
 package usecase
 
-import "diff-problems/domain"
+import (
+	cqrsDto "diff-problems/usecase/cqrs_dto"
+	cqrsService "diff-problems/usecase/cqrs_service"
+)
 
 type UserInteractor struct {
-	UserRepository UserRepository
+	UserService cqrsService.UserService
 }
 
-func (interactor *UserInteractor) Add(u domain.User) (err error) {
-	_, err = interactor.UserRepository.Store(u)
-	return
-}
-
-func (interactor *UserInteractor) Users() (user domain.Users, err error) {
-	user, err = interactor.UserRepository.FindAll()
-	return
-}
-
-func (interactor *UserInteractor) UserById(identifier uint64) (user domain.User, err error) {
-	user, err = interactor.UserRepository.FindById(identifier)
-	return
+func (interactor UserInteractor) FindByUserId(userId string) (cqrsDto.UserRate, error) {
+	return interactor.UserService.FindByUserId(userId)
 }

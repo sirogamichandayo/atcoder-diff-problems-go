@@ -24,11 +24,17 @@ go.work
 # Goland
 .idea
 
-# mariadb
-mariadb/data
+# mysql
+mysql/data
 
 # environment variables
 .env
 
 # realized
 .realize.yml
+
+# private directory
+private
+
+# main
+main

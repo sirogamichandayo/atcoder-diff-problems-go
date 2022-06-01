@@ -3,8 +3,6 @@ name: Go
 on:
   workflow_dispatch:
   push:
-    paths:
-      - backend-diff-problems/**
     branches-ignore:
       - main
     
@@ -12,19 +10,47 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0.29-debian
+        ports:
+          - 3306:3306
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+
     defaults:
       run:
         working-directory: backend-diff-problems
-        
+
+    env:
+      SIN_TEST_DB_USER: root
+      SIN_TEST_DB_PASSWORD: secret
+      SIN_TEST_DB_HOST: 127.0.0.1
+      SIN_TEST_DB_PORT: 3306
+      SIN_TEST_DB_DATABASE: sin_test
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
-        go-version: 1.18        
+        go-version: 1.18
+
+    - name: Create database
+      run: |
+        mysql --defaults-extra-file=../.github/mysql-dbaccess.cnf -h 127.0.0.1 --user=root --password=secret --port 3306 -e 'CREATE DATABASE IF NOT EXISTS sin_test CHARACTER SET utf8mb4;'
+
+    - name: Create tables
+      run: |
+        go get github.com/rubenv/sql-migrate/sql-migrate
+        go install -v github.com/rubenv/sql-migrate/sql-migrate
+        sql-migrate up --env=test
 
     - name: Build
-      run: go build -v ./...
+      run: |
+        go build -v ./...
 
     - name: Test
-      run: go test -v ./...
+      run: go test -p 1 -v ./...
