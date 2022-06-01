@@ -14,11 +14,11 @@ type UserService struct {
 	ContestResultClient client.ContestResultClient
 }
 
-func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
+func (s UserService) FindByUserId(userId string) (cqrsDto.UserRate, error) {
 	url := fmt.Sprintf("https://atcoder.jp/users/%s", userId)
 	userDocument, err := s.NewDocument(url)
 	if err != nil {
-		return cqrsDto.User{}, err
+		return cqrsDto.UserRate{}, err
 	}
 	// 優勝経験あるユーザーのselector
 	imageUrl, exist := userDocument.
@@ -41,15 +41,15 @@ func (s UserService) FindByUserId(userId string) (cqrsDto.User, error) {
 	rating := vo.NewNoRating()
 	resultList, err := s.ContestResultClient.All(userId)
 	if err != nil {
-		return cqrsDto.User{}, err
+		return cqrsDto.UserRate{}, err
 	}
 	if !resultList.Empty() {
 		lastResult, err := resultList.Last()
 		if err != nil {
-			return cqrsDto.User{}, err
+			return cqrsDto.UserRate{}, err
 		}
 		rating = lastResult.Rating
 	}
 
-	return cqrsDto.NewUser(userId, imageUrl, ranking, rating), nil
+	return cqrsDto.NewUserRate(userId, imageUrl, ranking, rating), nil
 }

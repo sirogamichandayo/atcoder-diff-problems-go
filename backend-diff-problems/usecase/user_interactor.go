@@ -9,6 +9,6 @@ type UserInteractor struct {
 	UserService cqrsService.UserService
 }
 
-func (interactor UserInteractor) FindByUserId(userId string) (cqrsDto.User, error) {
+func (interactor UserInteractor) FindByUserId(userId string) (cqrsDto.UserRate, error) {
 	return interactor.UserService.FindByUserId(userId)
 }

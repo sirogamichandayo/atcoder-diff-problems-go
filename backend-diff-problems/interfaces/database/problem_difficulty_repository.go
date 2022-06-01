@@ -15,7 +15,7 @@ func (repo *ProblemDifficultyRepository) BulkUpsert(u entity.ProblemDifficultyLi
 		`
 INSERT INTO problem_difficulties (problem_id, difficulty, clip_difficulty)
 VALUES %s
-ON DUPLICATE KEY UPDATE problem_id = VALUES(problem_id);
+ON DUPLICATE KEY UPDATE difficulty = VALUES(difficulty), clip_difficulty = VALUES(clip_difficulty);
 `,
 		placeholders)
 	_, err = repo.Execute(query, values...)

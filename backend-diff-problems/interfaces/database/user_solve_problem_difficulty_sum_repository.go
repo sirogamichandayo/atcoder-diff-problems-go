@@ -25,9 +25,22 @@ func (u UserSolveProblemDifficultySumRepository) FindById(s string) (entity.User
 	return sEntity, err
 }
 
-func (u UserSolveProblemDifficultySumRepository) All() (entity.UserSolveProblemDifficultySumList, error) {
-	//TODO implement me
-	panic("implement me")
+func (u UserSolveProblemDifficultySumRepository) SortedAll() (*entity.SortedUserSolveProblemDifficultySumList, error) {
+	rows, err := u.Query("SELECT user_id, clip_difficulty_sum, rnk FROM user_solve_problem_difficulty_sum ORDER BY rnk asc;")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var sList entity.UserSolveProblemDifficultySumList
+	for rows.Next() {
+		var sum entity.UserSolveProblemDifficultySum
+		if err := rows.Scan(&sum.UserId, &sum.ClipDifficultySum, &sum.Rank); err != nil {
+			return nil, err
+		}
+		sList = append(sList, sum)
+	}
+	return entity.NewSortedUserSolveProblemDifficultySumList(sList)
 }
 
 func (u UserSolveProblemDifficultySumRepository) Upsert(list entity.UserSolveProblemDifficultySumList) error {
@@ -41,7 +54,7 @@ func (u UserSolveProblemDifficultySumRepository) Upsert(list entity.UserSolvePro
 INSERT INTO user_solve_problem_difficulty_sum (user_id, clip_difficulty_sum, rnk)
 VALUES %s
 ON DUPLICATE KEY UPDATE
-  user_id = VALUES(user_id)
+   clip_difficulty_sum = VALUES(clip_difficulty_sum), rnk = VALUES(rnk)
 `,
 			placeholderValue.Placeholder())
 		_, err := u.Execute(query, placeholderValue.Values()...)

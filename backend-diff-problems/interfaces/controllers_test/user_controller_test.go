@@ -13,8 +13,9 @@ import (
 	"testing"
 )
 
-func Test_Show_正常系(t *testing.T) {
+func Test_UserController_Show_正常系(t *testing.T) {
 	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 	scrapeHandlerMock := web.NewMockScrapeHandler(ctrl)
 	documentMock := web.NewMockDocument(ctrl)
 	selectionMock1 := web.NewMockSelection(ctrl)
