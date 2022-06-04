@@ -4,13 +4,15 @@ import { useQuery } from "react-query";
 import { apiClientV1 } from "./api/apiClient";
 
 type User = {
-  Id: number;
+   Id: number;
   FirstName: string;
   LastName: string;
 };
 type Users = User[];
 
 function App() {
+  let a = 10;
+
   const { data, isLoading } = useQuery<Users>("get/users", async () => {
     const { data } = await apiClientV1.get("/users");
     return data;
