@@ -22,4 +22,4 @@ jobs:
       - name: Prettier
         run: npx prettier --check '**/*.{ts,tsx}'
       - name: Test
-        run: npm test --watchAll=false --passWithNoTests
+        run: npx jest --watchAll=false --passWithNoTests
