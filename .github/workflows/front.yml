@@ -20,6 +20,6 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Prettier
-        run: prettier --check '**/*.{ts,tsx}'
+        run: npx prettier --check '**/*.{ts,tsx}'
       - name: Test
         run: npm test --watchAll=false --passWithNoTests
