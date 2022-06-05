@@ -16,10 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install packages
-        run: yarn install
+        run: npm install
       - name: Prettier
-        run: yarn prettier --check '**/*.{ts,tsx}'
+        run: prettier --check '**/*.{ts,tsx}'
       - name: Lint
-        run: yarn eslint './src/**/*.{ts,tsx}'
+        run: npm run lint
       - name: Test
         run: yarn test --watchAll=false --passWithNoTests
