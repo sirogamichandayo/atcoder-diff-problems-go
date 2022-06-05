@@ -11,8 +11,6 @@ type User = {
 type Users = User[];
 
 function App() {
-  let a = 10;
-
   const { data, isLoading } = useQuery<Users>("get/users", async () => {
     const { data } = await apiClientV1.get("/users");
     return data;
