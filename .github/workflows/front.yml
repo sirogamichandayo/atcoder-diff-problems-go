@@ -22,4 +22,4 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        run: yarn test --watchAll=false --passWithNoTests
+        run: npm test --watchAll=false --passWithNoTests
