@@ -215,7 +215,7 @@ function ProblemGraph() {
   return (
     <Card sx={{ minWidth: 280, height: 400, display: "flex" }}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart sx={{ backgroundColor: "red" }}>
+        <LineChart>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             scale="time"
