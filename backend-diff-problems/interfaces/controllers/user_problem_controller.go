@@ -35,7 +35,7 @@ func (controller UserProblemController) Show(c Context) {
 	allPList := entity.AllProblemList()
 	c.JSON(http.StatusOK, gin.H{
 		"userId": entity.UserId(),
-		"problem_count": map[vo.ProblemColor]interface{}{
+		"problemCount": map[vo.ProblemColor]interface{}{
 			vo.BlackProblem: map[string]interface{}{
 				"all":    allPList.CountByColor(vo.BlackProblem),
 				"solved": solvedPList.CountByColor(vo.BlackProblem),

@@ -49,7 +49,7 @@ func Test_Show_正常系(t *testing.T) {
 	controller := controllers.NewUserProblemController(handler)
 	controller.Show(c1)
 
-	expectedUser1Body := `{"problem_count":{"Black":{"all":0,"solved":0},"Blue":{"all":1,"solved":1},"Bronze":{"all":0,"solved":0},"Brown":{"all":0,"solved":0},"Cyan":{"all":0,"solved":0},"Gold":{"all":0,"solved":0},"Gray":{"all":0,"solved":0},"Green":{"all":1,"solved":1},"Orange":{"all":0,"solved":0},"Red":{"all":0,"solved":0},"Silver":{"all":0,"solved":0},"Yellow":{"all":0,"solved":0}},"updatedEpochTime":"123456789","userId":"test-user1","userSolveClipDifficultyTotal":2400}`
+	expectedUser1Body := `{"problemCount":{"Black":{"all":0,"solved":0},"Blue":{"all":1,"solved":1},"Bronze":{"all":0,"solved":0},"Brown":{"all":0,"solved":0},"Cyan":{"all":0,"solved":0},"Gold":{"all":0,"solved":0},"Gray":{"all":0,"solved":0},"Green":{"all":1,"solved":1},"Orange":{"all":0,"solved":0},"Red":{"all":0,"solved":0},"Silver":{"all":0,"solved":0},"Yellow":{"all":0,"solved":0}},"updatedEpochTime":"123456789","userId":"test-user1","userSolveClipDifficultyTotal":2400}`
 	assert.JSONEq(t, expectedUser1Body, w1.Body.String())
 
 	w2 := httptest.NewRecorder()
@@ -59,6 +59,6 @@ func Test_Show_正常系(t *testing.T) {
 	controller2 := controllers.NewUserProblemController(handler)
 	controller2.Show(c2)
 
-	expectedUser2Body := `{"problem_count":{"Black":{"all":0,"solved":0},"Blue":{"all":1,"solved":0},"Bronze":{"all":0,"solved":0},"Brown":{"all":0,"solved":0},"Cyan":{"all":0,"solved":0},"Gold":{"all":0,"solved":0},"Gray":{"all":0,"solved":0},"Green":{"all":1,"solved":1},"Orange":{"all":0,"solved":0},"Red":{"all":0,"solved":0},"Silver":{"all":0,"solved":0},"Yellow":{"all":0,"solved":0}},"updatedEpochTime":"123456789","userId":"test-user2","userSolveClipDifficultyTotal":800}`
+	expectedUser2Body := `{"problemCount":{"Black":{"all":0,"solved":0},"Blue":{"all":1,"solved":0},"Bronze":{"all":0,"solved":0},"Brown":{"all":0,"solved":0},"Cyan":{"all":0,"solved":0},"Gold":{"all":0,"solved":0},"Gray":{"all":0,"solved":0},"Green":{"all":1,"solved":1},"Orange":{"all":0,"solved":0},"Red":{"all":0,"solved":0},"Silver":{"all":0,"solved":0},"Yellow":{"all":0,"solved":0}},"updatedEpochTime":"123456789","userId":"test-user2","userSolveClipDifficultyTotal":800}`
 	assert.JSONEq(t, expectedUser2Body, w2.Body.String())
 }

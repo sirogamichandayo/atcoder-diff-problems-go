@@ -38,6 +38,7 @@ func setApiV1Router(v1 *gin.RouterGroup, config *conf.Config) {
 
 	v1.GET("/users/:user_id", func(c *gin.Context) { userController.Show(c) })
 	v1.GET("/users/:user_id/problems", func(c *gin.Context) { userProblemController.Show(c) })
+	v1.GET("/users/:user_id/progresses", func(c *gin.Context) { userProgressController.Show(c) })
 	v1.GET("/ranks/near/:user_id", func(c *gin.Context) { rankNearController.Show(c) })
 	v1.GET("/ranks/paging", func(c *gin.Context) { rankController.Show(c) })
 }
