@@ -30,9 +30,7 @@ import {
   YAxis,
 } from "recharts";
 
-export default function Post() {
-  const router = useRouter();
-  const { id } = router.query;
+export default function Post(props) {
   return (
     <>
       <Grid container spacing={2} sx={{ height: 186 }}>
@@ -52,6 +50,38 @@ export default function Post() {
     </>
   );
 }
+
+/*
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+
+  // profile取得
+  const profileRes = await fetch("http://localhost:8080/api/v1/users/" + id);
+  const profile = await profileRes.json();
+
+  // problem取得
+  const problemRes = await fetch("http://localhost:8080/api/v1/users/" + id + "/problems");
+  const problem = await problemRes.json();
+
+  // ranking取得
+  const rankingRes = await fetch("http://localhost:8080/api/v1/ranks/near/" + id + "?count=" + 3);
+  const ranking = await rankingRes.json();
+
+  // progress
+  const progressRes = await fetch("http://localhost:8080/api/v1/users/" + id + "/shojin");
+  const progress = await progressRes.json();
+
+  return {
+    props: {
+      profile: profile,
+      problem: problem,
+      ranking: ranking,
+      progress: progress,
+    },
+  };
+}
+
+ */
 
 function Profile() {
   return (
@@ -194,7 +224,7 @@ const series = [
     color: "red",
     data: [
       { date: new Date(2020, 1, 1).getTime(), value: 100 },
-      // { date: new Date(2020, 1, 2).getTime(), value: 200 },
+      { date: new Date(2020, 1, 2).getTime(), value: 200 },
       { date: new Date(2020, 1, 3).getTime(), value: 200 },
       { date: new Date(2020, 1, 4).getTime(), value: 300 },
     ],
@@ -204,7 +234,7 @@ const series = [
     color: "blue",
     data: [
       { date: new Date(2020, 1, 1).getTime(), value: 200 },
-      // { date: new Date(2020, 1, 2).getTime(), value: 200 },
+      { date: new Date(2020, 1, 2).getTime(), value: 200 },
       { date: new Date(2020, 1, 3).getTime(), value: 300 },
       { date: new Date(2020, 1, 4).getTime(), value: 400 },
     ],
