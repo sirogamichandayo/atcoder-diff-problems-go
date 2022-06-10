@@ -13,6 +13,6 @@ type UserProgressInteractor struct {
 }
 
 func (interactor UserProgressInteractor) exec(userId string) (cqrsDto.UserRate, error) {
-
+	// 
 	return interactor.UserService.FindByUserId(userId)
 }

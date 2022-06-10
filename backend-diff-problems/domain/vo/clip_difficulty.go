@@ -1,10 +1,27 @@
 package vo
 
-import "database/sql/driver"
+import (
+	"database/sql/driver"
+	"fmt"
+)
 
 type ClipDifficulty struct {
 	Difficulty float64
 	Valid      bool
+}
+
+type ClipDifficultySum struct {
+	Difficulty float64
+}
+
+func (s *ClipDifficultySum) Add(difficulty ClipDifficulty) error {
+	if s == nil {
+		return fmt.Errorf("nil")
+	}
+	if difficulty.Valid {
+		s.Difficulty += difficulty.Difficulty
+	}
+	return nil
 }
 
 func ReconstructClipDifficulty(d *float64) ClipDifficulty {
